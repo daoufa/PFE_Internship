@@ -1,71 +1,37 @@
 package com.StagePFE.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data @NoArgsConstructor @AllArgsConstructor
 public class LigneRegarderPlusTardVisiteur implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="annonce_id")
 	private Annonce annonce;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="visiteur_id")
 	private Visiteur visiteur;
 
 	private String DateDAjout;
-
-	public LigneRegarderPlusTardVisiteur() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public LigneRegarderPlusTardVisiteur(Annonce annonce, Visiteur visiteur, String dateDAjout) {
-		super();
-		this.annonce = annonce;
-		this.visiteur = visiteur;
-		DateDAjout = dateDAjout;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Annonce getAnnonce() {
-		return annonce;
-	}
-
-	public void setAnnonce(Annonce annonce) {
-		this.annonce = annonce;
-	}
-
-	public Visiteur getVisiteur() {
-		return visiteur;
-	}
-
-	public void setEtudiant(Visiteur visiteur) {
-		this.visiteur = visiteur;
-	}
-
-	public String getDateDAjout() {
-		return DateDAjout;
-	}
-
-	public void setDateDAjout(String dateDAjout) {
-		DateDAjout = dateDAjout;
-	}
 
 	@Override
 	public String toString() {

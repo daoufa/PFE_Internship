@@ -1,79 +1,44 @@
 package com.StagePFE.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
-public class Entrepreneur implements Serializable{
-	
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Profile profile;
-	
-	@OneToMany(mappedBy = "entrepreneur")
+@DiscriminatorValue("entrepreneur")
+@Data @NoArgsConstructor @AllArgsConstructor
+public class Entrepreneur extends Profile {
+
+//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JoinColumn(name = "profile_id")
+//	private Profile profile;
+
+	@OneToMany(mappedBy = "entrepreneur",fetch = FetchType.EAGER)
 	private List<Annonce> annonces;
-	
+
 	private String nomEntreprise;
 
-	public Entrepreneur() {
-		super();
+	public Entrepreneur(String email, String nom, String prenom, Date dateCreation, String photo, String video,
+			String description, String adresse) {
+		super(email, nom, prenom, dateCreation, photo, video, description, adresse);
 		// TODO Auto-generated constructor stub
-	}
-
-	public Entrepreneur(Profile profile, List<Annonce> annonces, String nomEntreprise) {
-		super();
-		this.profile = profile;
-		this.annonces = annonces;
-		this.nomEntreprise = nomEntreprise;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
-
-	public List<Annonce> getAnnonces() {
-		return annonces;
-	}
-
-	public void setAnnonces(List<Annonce> annonces) {
-		this.annonces = annonces;
-	}
-
-	public String getNomEntreprise() {
-		return nomEntreprise;
-	}
-
-	public void setNomEntreprise(String nomEntreprise) {
-		this.nomEntreprise = nomEntreprise;
 	}
 
 	@Override
 	public String toString() {
-		return "Entrepreneur [id=" + id + ", profile=" + profile + ", annonces=" + annonces + ", nomEntreprise="
-				+ nomEntreprise + "]";
+		return "Entrepreneur [annonces=" + annonces + ", nomEntreprise=" + nomEntreprise + ", toString()="
+				+ super.toString();
 	}
 	
 	
+
 }

@@ -5,13 +5,19 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Visiteur implements Serializable{
 	
 	@Id
@@ -19,35 +25,9 @@ public class Visiteur implements Serializable{
 	private Long id;
 	
 	
-	@OneToMany(mappedBy = "visiteur")
+	@OneToMany(mappedBy = "visiteur",fetch = FetchType.LAZY)
 	private List<LigneRegarderPlusTardVisiteur> ligneRegarderPlusTardVisiteurs;
 	
-	public Visiteur() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Visiteur(List<LigneRegarderPlusTardVisiteur> ligneRegarderPlusTardVisiteurs) {
-		super();
-		this.ligneRegarderPlusTardVisiteurs = ligneRegarderPlusTardVisiteurs;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public List<LigneRegarderPlusTardVisiteur> getLigneRegarderPlusTardVisiteurs() {
-		return ligneRegarderPlusTardVisiteurs;
-	}
-
-	public void setLigneRegarderPlusTardVisiteurs(List<LigneRegarderPlusTardVisiteur> ligneRegarderPlusTardVisiteurs) {
-		this.ligneRegarderPlusTardVisiteurs = ligneRegarderPlusTardVisiteurs;
-	}
-
 	@Override
 	public String toString() {
 		return "Visiteur [id=" + id + ", ligneRegarderPlusTardVisiteurs=" + ligneRegarderPlusTardVisiteurs + "]";
