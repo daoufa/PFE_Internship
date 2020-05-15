@@ -34,8 +34,8 @@ public class Etudiant extends Profile {
 	
 	
 	public Etudiant(String email, String nom, String prenom, Date dateCreation, String photo, String video,
-			String description, String adresse) {
-		super(email, nom, prenom, dateCreation, photo, video, description, adresse);
+			String description, String adresse, String phoneNmbr) {
+		super(email, nom, prenom, dateCreation, photo, video, description, adresse, phoneNmbr);
 	}
 	
 	public void addEtudiantAnnonce(EtudiantAnnonce etdAnn) {

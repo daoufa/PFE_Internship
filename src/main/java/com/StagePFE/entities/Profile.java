@@ -29,12 +29,13 @@ public class Profile implements Serializable {
 	private String video;
 	private String description;
 	private String adresse;
+	private String phoneNmbr;
 //	@OneToOne(mappedBy = "profile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	private Etudiant etudiant;
 //	@OneToOne(mappedBy = "profile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	private Entrepreneur entrepreneur;
 	public Profile(String email, String nom, String prenom, Date dateCreation, String photo, String video,
-			String description, String adresse) {
+			String description, String adresse,String phoneNmbr) {
 		super();
 		this.email = email;
 		this.nom = nom;

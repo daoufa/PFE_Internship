@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,18 +37,21 @@ public class Annonce implements Serializable {
 	private List<LigneRegarderPlusTardVisiteur> ligneRegarderPlusTardVisiteurs;
 
 	private String titre;
+	@Column(columnDefinition="text")
 	private String description;
 	private String dateCreation;
 	private String dateExperaiton;
 	private Boolean isOuvert;
+	private String lieu;
 
-	public Annonce(String titre, String description, String dateCreation, String dateExperaiton, Boolean isOuvert) {
+	public Annonce(String titre, String description, String dateCreation, String dateExperaiton, Boolean isOuvert, String lieu) {
 		super();
 		this.titre = titre;
 		this.description = description;
 		this.dateCreation = dateCreation;
 		this.dateExperaiton = dateExperaiton;
 		this.isOuvert = isOuvert;
+		this.lieu=lieu;
 	}
 
 	
@@ -75,7 +79,7 @@ public class Annonce implements Serializable {
 	public String toString() {
 		return "Annonce [id=" + id + ", ligneRegarderPlusTardVisiteurs=" + ligneRegarderPlusTardVisiteurs + ", titre=" + titre
 				+ ", description=" + description + ", dateCreation=" + dateCreation + ", dateExperaiton="
-				+ dateExperaiton + ", isOuvert=" + isOuvert + "]";
+				+ dateExperaiton + ", isOuvert=" + isOuvert + ", lieu=" + lieu + "]";
 	}
 	
 	

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>test</title>
+</head>
+<div th:each="a:${annonces}">
+<h1 th:text="${a.description}"></h1>
+</div>
+
+</html>

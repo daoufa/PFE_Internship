@@ -8,17 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.dao.EntrepreneurRepository;
 import com.StagePFE.dao.EtudiantAnnonceRepository;
 import com.StagePFE.dao.EtudiantRepository;
 import com.StagePFE.dao.ProfileRepository;
+import com.StagePFE.dao.RoleRepository;
+import com.StagePFE.dao.UserRepository;
 import com.StagePFE.entities.Annonce;
 import com.StagePFE.entities.Entrepreneur;
 import com.StagePFE.entities.Etudiant;
 import com.StagePFE.entities.EtudiantAnnonce;
 import com.StagePFE.entities.Profile;
+import com.StagePFE.entities.Role;
+import com.StagePFE.entities.User;
 
 @SpringBootApplication
 public class RechercheStagePfeApplication implements CommandLineRunner {
@@ -34,6 +39,12 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 
 	@Autowired
 	private EtudiantAnnonceRepository etudiantAnnonceRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RechercheStagePfeApplication.class, args);
@@ -43,28 +54,27 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		SimpleDateFormat smpl = new SimpleDateFormat("yyyyy-mm-dd");
 		Etudiant e1 = new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null, "c:/photos", "E:/videos",
-				"first etudiant", "marrakech");
+				"first etudiant", "marrakech", "06535");
 
 		e1.setDateCreation(smpl.parse("2017-11-15"));
 		e1 = etudiantRepository.save(e1);
 		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", null,
-				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech"));
+				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech","06000666"));
 		Etudiant e3 = etudiantRepository.save(
-				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar", "casa"));
+				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar", "casa", "06111616"));
 		Etudiant e4 = etudiantRepository.save(new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null,
-				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir"));
-
+				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545"));
 		Entrepreneur p1 = entrepreneurRepository.save(new Entrepreneur("abdeer@outlook.fr", "daoufa", "abderrahman",
-				null, "c:/photos", "E:/videos", "first etudiant", "marrakech"));
+				new Date(), "c:/photos", "E:/videos", "first entrepreneur", "marrakech","0654412", "SQLi"));
 		p1.setNomEntreprise("SQLi");
 		Entrepreneur p2 = entrepreneurRepository.save(new Entrepreneur("mosameh.meryem@Gmail.com", "mosameh", "meryem",
-				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech"));
+				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "065234", "STG"));
 		p2.setNomEntreprise("Google");
 		Entrepreneur p3 = entrepreneurRepository.save(new Entrepreneur("mosameh.meryem@Gmail.com", "mosameh", "meryem",
-				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech"));
+				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "75755","OCP"));
 		p3.setNomEntreprise("facebook");
 		Entrepreneur p4 = entrepreneurRepository.save(new Entrepreneur("mosameh.meryem@Gmail.com", "mosameh", "meryem",
-				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech"));
+				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "2454","RIDAL"));
 		p4.setNomEntreprise("SQLi");
 		/*
 		 * EtudiantAnnonce etAnn =new EtudiantAnnonce(); Annonce a=new
@@ -74,9 +84,9 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		 * etAnn=etudiantAnnonceRepository.save(etAnn); System.out.println(etAnn);
 		 * e1.addEtudiantAnnonce(etAnn); etudiantRepository.save(e1);
 		 */
-		Annonce a = new Annonce("SQLi Stage", "stage preambauche", "25/6/2020", "15/5/2020", true);
-		Annonce a1 = new Annonce("SQLi emplois", "sCDI", "02/02/2020", "15/5/2020", true);
-		Annonce a2 = new Annonce("google", "CDI", "7/03/2020", "15/5/2020", true);
+		Annonce a = new Annonce("SQLi Stage", "sqli stage developpeur java ", "25/6/2020", "15/5/2020", true,"Rabat");
+		Annonce a1 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", "02/02/2020", "15/5/2020", true,"casablanca");
+		Annonce a2 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", "7/03/2020", "15/5/2020", true,"marrakech");
 		long id = 1l;
 		Entrepreneur entrep = null;
 		Optional<Entrepreneur> result = entrepreneurRepository.findById(1l);
@@ -136,6 +146,34 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 			System.out.println("1	1	1	1	1	1");
 		}
 
+		/*
+		 * creation des roles
+		 * */
+		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
+		
+		Role role1=new Role();
+		role1.setRole("ADMIN");
+		
+		Role role2=new Role();
+		role2.setRole("USER");
+		
+		roleRepository.save(role1);
+		roleRepository.save(role2);
+		User user1=new User();
+		user1.setUsername("client1");user1.setPassword(bcp.encode("000"));user1.setActive(true);
+		user1.addRole(role2);
+		userRepository.save(user1);
+		
+		User user2=new User();
+		user2.setUsername("admin");user2.setPassword(bcp.encode("123"));user2.setActive(true);
+		user2.addRole(role1);user2.addRole(role2);
+		userRepository.save(user2);
+		
+		/*
+		 * end
+		 */
+		
+		
 //		Annonce a=new Annonce("SQLi Stage", "stage preambauche", "25/6/2020", "15/5/2020", true);
 //		a.setEntrepreneur(p1);
 //		annonceRepository.save(a);

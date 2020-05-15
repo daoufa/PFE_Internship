@@ -28,14 +28,14 @@ public class Entrepreneur extends Profile {
 	private String nomEntreprise;
 
 	public Entrepreneur(String email, String nom, String prenom, Date dateCreation, String photo, String video,
-			String description, String adresse) {
-		super(email, nom, prenom, dateCreation, photo, video, description, adresse);
-		// TODO Auto-generated constructor stub
+			String description, String adresse,String phoneNmbr, String nomEntreprise) {
+		super(email, nom, prenom, dateCreation, photo, video, description, adresse, phoneNmbr);
+		this.nomEntreprise=nomEntreprise;
 	}
 
 	@Override
 	public String toString() {
-		return "Entrepreneur [annonces=" + annonces + ", nomEntreprise=" + nomEntreprise + ", toString()="
+		return "Entrepreneur [annonces=" + annonces + ", nomEntreprise=" + nomEntreprise +", toString()="
 				+ super.toString();
 	}
 	
