@@ -10,17 +10,20 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.entities.Annonce;
+import com.StagePFE.entities.Entrepreneur;
 @Controller
 public class HomeController {
 	@Autowired
 	private AnnonceRepository annonceRepository;
 	@GetMapping("/")
-	public RedirectView redirect() {
+	public RedirectView redirectIndex() {
 		return new RedirectView("/index");
 	}
 	
@@ -93,4 +96,27 @@ public class HomeController {
 		return "index";
 	}
 	
+	/*
+	 * resolving form object:entrepreneurInfo  if it doesn't work get values in the default way in Get request
+	 * */
+	@GetMapping("/pageInscription")
+	public String pageInscription(Model model) {
+		model.addAttribute("entrepreneur",new Entrepreneur());
+		return "inscription";
+	}
+	
+	
+	@PostMapping("/inscrire")
+	public String inscrire(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
+			@RequestParam(name="mdp") int mdp,
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation) {
+		if(mdp!=mdpConfirmation) {
+			model.addAttribute("errorMessage","confirmation invalide");
+			return "inscription";
+		}
+		model.addAttribute("mdp",mdp);
+		model.addAttribute("nom",e.getNom());
+		model.addAttribute("photo",e.getPhoto());
+		return "test";
+	}
 }
