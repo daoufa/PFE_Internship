@@ -7,6 +7,6 @@ import com.StagePFE.entities.Role;
 
 @CrossOrigin("http://localhost:4200")
 public interface RoleRepository extends JpaRepository<Role,Long> {
-
+	Role findByRole(String mc);
 
 }

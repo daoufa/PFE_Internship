@@ -2,11 +2,13 @@ package com.StagePFE.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +18,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.StagePFE.dao.AnnonceRepository;
+import com.StagePFE.dao.EntrepreneurRepository;
+import com.StagePFE.dao.RoleRepository;
+import com.StagePFE.dao.UserRepository;
 import com.StagePFE.entities.Annonce;
 import com.StagePFE.entities.Entrepreneur;
+import com.StagePFE.entities.User;
+
+import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 @Controller
 public class HomeController {
 	@Autowired
 	private AnnonceRepository annonceRepository;
+	@Autowired
+	private EntrepreneurRepository entrepreneurRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	
 	@GetMapping("/")
 	public RedirectView redirectIndex() {
 		return new RedirectView("/index");
@@ -114,6 +130,15 @@ public class HomeController {
 			model.addAttribute("errorMessage","confirmation invalide");
 			return "inscription";
 		}
+		e.setDateCreation(new Date());
+		entrepreneurRepository.save(e);
+		
+		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
+		User user=new User();
+		user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(mdp)));user.setActive(true);
+		user.addRole(roleRepository.findByRole("USER"));
+		userRepository.save(user);
+		
 		model.addAttribute("mdp",mdp);
 		model.addAttribute("nom",e.getNom());
 		model.addAttribute("photo",e.getPhoto());
