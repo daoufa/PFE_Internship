@@ -19,10 +19,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.dao.EntrepreneurRepository;
+import com.StagePFE.dao.EtudiantRepository;
 import com.StagePFE.dao.RoleRepository;
 import com.StagePFE.dao.UserRepository;
 import com.StagePFE.entities.Annonce;
 import com.StagePFE.entities.Entrepreneur;
+import com.StagePFE.entities.Etudiant;
 import com.StagePFE.entities.User;
 
 import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
@@ -32,6 +34,8 @@ public class HomeController {
 	private AnnonceRepository annonceRepository;
 	@Autowired
 	private EntrepreneurRepository entrepreneurRepository;
+	@Autowired
+	private EtudiantRepository etudiantRepository;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -118,14 +122,18 @@ public class HomeController {
 	@GetMapping("/pageInscription")
 	public String pageInscription(Model model) {
 		model.addAttribute("entrepreneur",new Entrepreneur());
+		model.addAttribute("etudiant",new Etudiant());
 		return "inscription";
 	}
 	
 	
-	@PostMapping("/inscrire")
-	public String inscrire(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
+	@PostMapping("/inscrireEntrepreneur")
+	public String inscrireEntrepreneur(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
 			@RequestParam(name="mdp") int mdp,
-			@RequestParam(name="mdpConfirmation") int mdpConfirmation) {
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
+			@RequestParam(name="page" , defaultValue="0") int page,
+			@RequestParam(name="motcle" , defaultValue="") String motcle,
+			@RequestParam(name="localite" , defaultValue="") String lieu) {
 		if(mdp!=mdpConfirmation) {
 			model.addAttribute("errorMessage","confirmation invalide");
 			return "inscription";
@@ -139,9 +147,70 @@ public class HomeController {
 		user.addRole(roleRepository.findByRole("USER"));
 		userRepository.save(user);
 		
-		model.addAttribute("mdp",mdp);
-		model.addAttribute("nom",e.getNom());
-		model.addAttribute("photo",e.getPhoto());
-		return "test";
+//		redirection vers index
+		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
+		model.addAttribute("annonces",annonces.getContent());
+		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("motcle",motcle);
+		model.addAttribute("localite",lieu);
+		return "index";
+	}
+	
+	
+	
+	@PostMapping("/inscrireEtudiant")
+	public String inscrireEtudiant(Model model, @ModelAttribute("etudiant") Etudiant e,
+			@RequestParam(name="mdp") int mdp,
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
+			@RequestParam(name="page" , defaultValue="0") int page,
+			@RequestParam(name="motcle" , defaultValue="") String motcle,
+			@RequestParam(name="localite" , defaultValue="") String lieu) {
+		if(mdp!=mdpConfirmation) {
+			model.addAttribute("errorMessage","confirmation invalide");
+			return "inscription";
+		}
+		e.setDateCreation(new Date());
+		etudiantRepository.save(e);
+		
+		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
+		User user=new User();
+		user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(mdp)));user.setActive(true);
+		user.addRole(roleRepository.findByRole("USER"));
+		userRepository.save(user);
+		
+//		redirection vers index
+		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
+		model.addAttribute("annonces",annonces.getContent());
+		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("motcle",motcle);
+		model.addAttribute("localite",lieu);
+		return "index";
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

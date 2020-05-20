@@ -54,16 +54,16 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		SimpleDateFormat smpl = new SimpleDateFormat("yyyyy-mm-dd");
 		Etudiant e1 = new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null, "c:/photos", "E:/videos",
-				"first etudiant", "marrakech", "06535");
+				"first etudiant", "marrakech", "06535", null);
 
 		e1.setDateCreation(smpl.parse("2017-11-15"));
 		e1 = etudiantRepository.save(e1);
 		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", null,
-				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech","06000666"));
+				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech","06000666", null));
 		Etudiant e3 = etudiantRepository.save(
-				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar", "casa", "06111616"));
+				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar", "casa", "06111616", null));
 		Etudiant e4 = etudiantRepository.save(new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null,
-				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545"));
+				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545", null));
 		Entrepreneur p1 = entrepreneurRepository.save(new Entrepreneur("abdeer@outlook.fr", "daoufa", "abderrahman",
 				new Date(), "c:/photos", "E:/videos", "first entrepreneur", "marrakech","0654412", "SQLi"));
 		p1.setNomEntreprise("SQLi");

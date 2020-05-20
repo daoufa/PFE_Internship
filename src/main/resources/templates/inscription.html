@@ -143,7 +143,7 @@
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   <h3 class="register-heading" style="color:#fff;">s'inscrire comme Entrepreneur</h3>
                   
-                  <form th:action="@{/inscrire}" th:object="${entrepreneur}" method="post">
+                  <form th:action="@{/inscrireEntrepreneur}" th:object="${entrepreneur}" method="post">
                   
                  	<div class="row register-form">
                       <div class="col-md-6">
@@ -191,8 +191,8 @@
                               <input type="text" minlength="1" maxlength="20" name="txtEmpPhone" class="form-control" placeholder="numero tel " th:field="*{phoneNmbr}" />
                           </div>
                           <div class="custom-file ">
-                              <input type="file" id="myfile" class="custom-file-input">
-                              <label class="custom-file-label" for="myfile" th:field="*{video}">video presentative</label>
+                              <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
+                              <label class="custom-file-label" for="myfile" >video presentative</label>
                           </div>
 
                           <input type="submit" class="btnRegister"  value="s'inscrire"/>
@@ -204,60 +204,61 @@
               <!-- etudiant -->
               <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                   <h3 class="register-heading" style="color:#fff;">s'inscrire comme Etudiant</h3>
-
-                  <div class="row register-form">
-                      <div class="col-md-6">
-
-                          <div class="form-group">
-                              <input type="text" class="form-control" placeholder="nom *" value="" />
-                          </div>
-                          <div class="form-group">
-                              <input type="text" class="form-control" placeholder="prenom *" value="" />
-                          </div>
-                          <div class="form-group">
-                              <input type="password" class="form-control" placeholder="mot de passe *" value="" />
-                          </div>
-                          <div class="form-group">
-                              <input type="password" class="form-control"  placeholder="Confirmer mot de passe *" value="" />
-                          </div>
-                          <div class="form-group">
-                              <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="numero tel " value="" />
-                          </div>
-                          <div class="form-group">
-                              <textarea class="form-control" id="message" name="description" rows="3" placeholder="description"></textarea>
-                          </div>
-
-                      </div>
-
-                      <div class="col-md-6">
-                        <!-- profile picture -->
-                        <div class="container" style="padding-left: 80px">
-                          <div id="profile-container">
-                             <image id="profileImageEtudiant" src="imgs/etudiant2.png" />
-                          </div>
-                          <input id="imageUploadEtudiant" type="file" style="display:none;" name="profile_photo" placeholder="Photo" required="" capture>
-                          </div>
-                        <!-- end profile picture -->
-                          <div class="form-group mt-3">
-                              <input type="email" class="form-control" placeholder="Email *" value="" />
-                          </div>
-                          <div class="form-group">
-                              <input type="text" class="form-control" placeholder="adresse *" value="" />
-                          </div>
-                          
-                          <div class="custom-file mb-3">
-                              <input type="file" id="myfile" class="custom-file-input">
-                              <label class="custom-file-label" for="myfile">video presentative</label>
-                          </div>
-                          <div class="custom-file ">
-                              <input type="file" id="myfile" class="custom-file-input">
-                              <label class="custom-file-label" for="myfile">CV</label>
-                          </div>
-
-                          <input type="submit" class="btnRegister"  value="s'inscrire"/>
-                      </div>
-                  </div>
-                  
+				  <form th:action="@{/inscrireEtudiant}" th:object="${etudiant}" method="post">
+	                  <div class="row register-form">
+	                      <div class="col-md-6">
+	
+	                          <div class="form-group">
+	                              <input type="text" class="form-control" placeholder="nom *" th:field="*{nom}" />
+	                          </div>
+	                          <div class="form-group">
+	                              <input type="text" class="form-control" placeholder="prenom *" th:field="*{prenom}" />
+	                          </div>
+	                          <div class="form-group">
+	                              <input type="password" class="form-control" placeholder="mot de passe *" name="mdp" />
+	                          </div>
+	                          <div class="form-group">
+	                              <input type="password" class="form-control"  placeholder="Confirmer mot de passe *" name="mdpConfirmation" />
+	                              <div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;" />
+	                          </div>
+	                          <div class="form-group">
+	                              <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="numero tel " th:field="*{phoneNmbr}" />
+	                          </div>
+	                          <div class="form-group">
+	                              <textarea class="form-control" id="message" name="description" rows="3" placeholder="description" th:field="*{description}"></textarea>
+	                          </div>
+	
+	                      </div>
+	
+	                      <div class="col-md-6">
+	                        <!-- profile picture -->
+	                        <div class="container" style="padding-left: 80px">
+	                          <div id="profile-container">
+	                             <image id="profileImageEtudiant" src="imgs/etudiant2.png" />
+	                          </div>
+	                          <input id="imageUploadEtudiant" type="file" style="display:none;" name="profile_photo" placeholder="Photo" capture>
+	                          </div>
+	                        <!-- end profile picture -->
+	                          <div class="form-group mt-3">
+	                              <input type="email" class="form-control" placeholder="Email *" th:field="*{email}" />
+	                          </div>
+	                          <div class="form-group">
+	                              <input type="text" class="form-control" placeholder="adresse *" th:field="*{adresse}" />
+	                          </div>
+	                          
+	                          <div class="custom-file mb-3">
+	                              <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
+	                              <label class="custom-file-label" for="myfile">video presentative</label>
+	                          </div>
+	                          <div class="custom-file ">
+	                              <input type="file" id="myfile" class="custom-file-input" th:field="*{cv}">
+	                              <label class="custom-file-label" for="myfile">CV</label>
+	                          </div>
+	
+	                          <input type="submit" class="btnRegister"  value="s'inscrire"/>
+	                      </div>
+	                  </div>
+                  </form>
               </div>
           </div>
       </div>
