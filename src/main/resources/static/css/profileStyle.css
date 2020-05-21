@@ -1,0 +1,195 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  background: url(../imgs/nightBallon.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  /*padding-bottom: 300px;
+  min-height: 100vh;*/
+  position: relative;
+}
+
+.navbar-brand img {
+  height: 50px;
+  padding: 0px;
+  border-radius: 5px;
+  width: 170px;
+}
+
+#mainnav a {
+  color: aliceblue;
+  font-weight: bold;
+  border-left:1px solid #555;
+  border-right:1px solid #555;
+}
+#mainnav a:hover {
+  background-color:#555;
+}
+
+#mainnav {
+  padding-bottom: 0px;
+  padding-top: 0px;
+  /* opacity: 0.7; */
+}
+#mainnav > div > a {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+#main-header {
+  background-color: #bd9334;
+  border-radius: 5px;
+  font-weight: bold;
+  
+}
+#headerDiv {
+  padding: 0px;
+  z-index: 1;
+}
+#profile-icon {
+  width: 20px;
+  height: 20px;
+}
+#main-header a {
+  color: rgba(3, 3, 3, 0.712);
+  font-family: sans-serif;
+  border-left: 1px solid #e4d1a5;
+  border-right: 1px solid #bd9334;
+  width: 300;
+  color: #ccc;
+}
+#main-header a[id="day"] {
+  color: #71412C;
+}
+
+.aHover:hover {
+  color: #fff;
+  background-color:#555;
+}
+
+#login-dp {
+  min-width: 250px;
+  padding: 14px 14px 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255);
+}
+#login-dp .help-block {
+  font-size: 12px;
+}
+#login-dp .bottom {
+  background-color: rgba(255, 255, 255);
+  border-top: 1px solid #ddd;
+  clear: both;
+  padding: 14px;
+}
+#login-dp .social-buttons {
+  margin: 12px 0;
+}
+#login-dp .social-buttons a {
+  width: 49%;
+}
+
+#login-dp .form-group {
+  margin-bottom: 10px;
+}
+.btn-fb {
+  color: #fff;
+  background-color: #3b5998;
+}
+.btn-fb:hover {
+  color: #fff;
+  background-color: #496ebc;
+}
+.btn-tw {
+  color: #fff;
+  background-color: #55acee;
+}
+.btn-tw:hover {
+  color: #fff;
+  background-color: #59b5fa;
+}
+@media (max-width: 768px) {
+  #login-dp {
+    background-color: inherit;
+    color: #fff;
+  }
+  #login-dp .bottom {
+    background-color: inherit;
+    border-top: 0 none;
+  }
+}
+
+
+#profile{
+	/*border:2px solid #fff;*/
+	/*height:500px;*/
+	width: 100%;
+}
+
+#profilePic{
+	display: flex;
+	justify-content: center;
+}
+#imageUpload
+{
+    display: none;
+}
+
+#profileImage
+{
+    cursor: pointer;
+}
+
+#profile-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+#profile-container img {
+    width: 150px;
+    height: 150px;
+}
+
+.profileLine{
+	/*border:2px solid red;*/
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.discInfo{
+	width: 300px;
+	border:2px solid #bd9334;
+	border-radius: 15px;
+	background-color: rgba(200, 200, 200, 0.712);
+}
+
+.card-header{
+	display: flex;
+	justify-content: center;
+	font-weight: bold;
+	border-bottom: 2px solid #bd9334;
+
+}
+
+#videoPresentatif{
+	width: 400px;
+	height: 350px;
+	border:4px solid #bd9334;
+	border-radius: 15px;
+	margin-bottom: 300px;
+	margin-top: 50px;
+	background-color: rgba(200, 200, 200, 0.712);
+}

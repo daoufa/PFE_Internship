@@ -188,6 +188,14 @@ public class HomeController {
 		model.addAttribute("localite",lieu);
 		return "index";
 	}
+	
+	
+	
+	@GetMapping("/profile")
+	public String profile(Model model) {
+		
+		return "profile";
+	}
 }
 
 
