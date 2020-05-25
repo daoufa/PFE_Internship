@@ -5,8 +5,13 @@
 </head><!-- 
 <div th:each="a:${annonces}">
 <h1 th:text="${a.description}"></h1>
-</div> -->
+</div> 
 <h2 th:utext="${nom}"></h2>
 <h2 th:utext="${photo}"></h2>
-<h2 th:utext="${mdp}"></h2>
+<h2 th:utext="${mdp}"></h2>-->
+<form th:action="@{/login}" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><input type="submit" value="Sign In"/></div>
+        </form>
 </html>

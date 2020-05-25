@@ -5,9 +5,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,19 +43,30 @@ public class HomeController {
 	private UserRepository userRepository;
 	@Autowired
 	private RoleRepository roleRepository;
+	@Autowired
+	private HttpServletRequest httpServletRequest;
+	
+	
+	@GetMapping("/login")
+	public String login(Model model) {
+		return "test";
+	}
 	
 	
 	@GetMapping("/")
 	public RedirectView redirectIndex() {
 		return new RedirectView("/index");
 	}
-	
+	/*
+	 * @AuthenticationPrincipal User user,
+	 * */
 	@GetMapping("/index")
 	public String index(Model model,
 			@RequestParam(name="page" , defaultValue="0") int page,
 			@RequestParam(name="motcle" , defaultValue="") String motcle,
 			@RequestParam(name="localite" , defaultValue="") String lieu
 			) {
+		System.out.println(httpServletRequest.getRemoteUser());
 		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
 		model.addAttribute("annonces",annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
