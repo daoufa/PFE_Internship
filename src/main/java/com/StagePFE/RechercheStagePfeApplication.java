@@ -27,8 +27,8 @@ import com.StagePFE.entities.User;
 
 @SpringBootApplication
 public class RechercheStagePfeApplication implements CommandLineRunner {
-	@Autowired
-	private ProfileRepository profileRepository;
+//	@Autowired
+//	private ProfileRepository profileRepository;
 	@Autowired
 	private EtudiantRepository etudiantRepository;
 	@Autowired
@@ -157,8 +157,16 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		Role role2=new Role();
 		role2.setRole("USER");
 		
+		Role role3=new Role();
+		role3.setRole("ETUDIANT");
+		
+		Role role4=new Role();
+		role4.setRole("ENTREPRENEUR");
+		
 		roleRepository.save(role1);
 		roleRepository.save(role2);
+		roleRepository.save(role3);
+		roleRepository.save(role4);
 		User user1=new User();
 		user1.setUsername("client1");user1.setPassword(bcp.encode("000"));user1.setActive(true);
 		user1.addRole(role2);

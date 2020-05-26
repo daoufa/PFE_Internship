@@ -23,11 +23,14 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.dao.EntrepreneurRepository;
 import com.StagePFE.dao.EtudiantRepository;
+import com.StagePFE.dao.ProfileRepository;
 import com.StagePFE.dao.RoleRepository;
 import com.StagePFE.dao.UserRepository;
 import com.StagePFE.entities.Annonce;
 import com.StagePFE.entities.Entrepreneur;
 import com.StagePFE.entities.Etudiant;
+import com.StagePFE.entities.Profile;
+import com.StagePFE.entities.Role;
 import com.StagePFE.entities.User;
 
 import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
@@ -45,6 +48,8 @@ public class HomeController {
 	private RoleRepository roleRepository;
 	@Autowired
 	private HttpServletRequest httpServletRequest;
+//	@Autowired
+//	private ProfileRepository profileRepository;
 	
 	
 	@GetMapping("/login")
@@ -66,7 +71,6 @@ public class HomeController {
 			@RequestParam(name="motcle" , defaultValue="") String motcle,
 			@RequestParam(name="localite" , defaultValue="") String lieu
 			) {
-		System.out.println(httpServletRequest.getRemoteUser());
 		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
 		model.addAttribute("annonces",annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
@@ -158,7 +162,7 @@ public class HomeController {
 		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
 		User user=new User();
 		user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(mdp)));user.setActive(true);
-		user.addRole(roleRepository.findByRole("USER"));
+		user.addRole(roleRepository.findByRole("ENTREPRENEUR"));
 		userRepository.save(user);
 		
 //		redirection vers index
@@ -190,7 +194,7 @@ public class HomeController {
 		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
 		User user=new User();
 		user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(mdp)));user.setActive(true);
-		user.addRole(roleRepository.findByRole("USER"));
+		user.addRole(roleRepository.findByRole("ETUDIANT"));
 		userRepository.save(user);
 		
 //		redirection vers index
@@ -203,11 +207,33 @@ public class HomeController {
 		return "index";
 	}
 	
-	
-	
 	@GetMapping("/profile")
-	public String profile(Model model) {
+	public RedirectView redirectProfile() {
 		
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null)new RedirectView("/login");
+		
+		List<Role> roles = user.getRoles();
+		Role entrepreneurRole = new Role();
+		entrepreneurRole.setRole("ENTREPRENEUR");
+		
+		if(roles.contains(entrepreneurRole)) {
+			
+			return new RedirectView("/EntrepreneurProfile");
+			
+		}else {
+			return new RedirectView("/EtudiantProfile");
+		}
+		
+	}
+	
+	@GetMapping("/EntrepreneurProfile")
+	public String EntrepreneurProfile(Model model) {
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return "login";
+		System.out.println(httpServletRequest.getRemoteUser());
+		Entrepreneur entrepreneur = entrepreneurRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
+		model.addAttribute("entrepreneur",entrepreneur);
 		return "profile";
 	}
 }

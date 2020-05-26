@@ -32,7 +32,8 @@ public class Entrepreneur extends Profile {
 		super(email, nom, prenom, dateCreation, photo, video, description, adresse, phoneNmbr);
 		this.nomEntreprise=nomEntreprise;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "Entrepreneur [annonces=" + annonces + ", nomEntreprise=" + nomEntreprise +", toString()="

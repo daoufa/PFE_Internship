@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 ////		http.formLogin();
 ////		http.httpBasic();
 //		http.authorizeRequests().antMatchers("/","/home").permitAll()
-//			.anyRequest().authenticated();
+//			.anyRequest()
 ////			.and()
 ////			.formLogin()..permitAll();
 ////			.and()
@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 ////		
 		http.authorizeRequests()
 			.antMatchers("/admin").hasRole("ADMIN")
-			.antMatchers("/profile").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/profile").authenticated()
 			.antMatchers("/").permitAll()
 			.and().formLogin();//loginPage("/login")
 	}

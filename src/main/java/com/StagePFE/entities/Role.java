@@ -21,4 +21,14 @@ public class Role {
     
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+    
+    
+    @Override
+    public boolean equals(Object o) {
+    	if(o==this) return true;
+    	if(!(o instanceof Role))return false;
+    	Role r = (Role)o;
+    	if(o==null) return false;
+    	return ( this.getRole().equals(r.getRole()));
+   }
 }
