@@ -146,7 +146,7 @@
         <button class="btn btn-light" id="seachIcon" type="submit"><i class="fas fa-search"></i></button>
       </form>
     </div>
-<div class="container " style="height: 900px;" >
+<div class="container " style="border:2px solid red" >
     <div class="row" id="mainBody">
       <div class="col-sm-6 col-md-7 col-lg-8 col-xl-8" >
        <div th:each="a:${annonces}">
@@ -200,8 +200,9 @@
 
       </div>
 
-      <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4 " >
-        <div class="container mt-5 " style="height: 600px;padding: 0px;border-radius: 10px;">
+	
+      <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4 " style="border:2px solid red">
+        <div class="container mt-5 pb-5" style="padding: 0px;border-radius: 10px;">
           
             <form action="/index/filter" method="get">
 			<h4 class="text-monospace font-weight-bold p-2" style="background-color: rgba(235, 234, 231, 0.637);border-radius: 10px;color: rgb(189, 161, 7)"> <i class="fas fa-clipboard"></i> Trier par :
