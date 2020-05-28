@@ -142,6 +142,98 @@
 
     <div class="container" id="profile">
     	
+    	<!-- slider des annonces  -->
+        <div class="d-flex justify-content-center " th:if="${sliderAnnonces.isEmpty()==false}">
+	        <div id="slider" class="carousel slide " data-ride="carousel" >
+	          <ol class="carousel-indicators">
+	            <li class="active" data-target="#slider" data-slide-to="0" th:if="${sliderAnnonces.size()>0}"></li>
+	            <li data-target="#slider" data-slide-to="1" th:if="${sliderAnnonces.size()>1}"></li>
+	            <li data-target="#slider" data-slide-to="2" th:if="${sliderAnnonces.size()>2}"></li>
+	            <li data-target="#slider" data-slide-to="3" th:if="${sliderAnnonces.size()>3}"></li>
+	          </ol>
+	          
+	           <div class="carousel-inner">
+	           
+		           <div class="carousel-item active" th:if="${sliderAnnonces.size()>0}">
+		              	<div class="card  text-white p-3 cardSlider">
+			                <blockquote class="card-bodyquote p-3 blockquoteSlider">
+			                 	<h4 style="display: flex;justify-content: center;"><spam th:text="${sliderAnnonces.get(0).getDateCreation()}"/></h4>
+			                    <p><spam th:text="${sliderAnnonces.get(0).getDescription()}"/></p>
+			                    <footer class="blockquote-footer">
+			                        <h5>
+			                            <cite title="Source Title" style="color:red"><spam th:text="${sliderAnnonces.get(0).getEtudiantAnnonces().size()}"/></cite>
+			                            Cadidatures
+			                        </h5>
+			                    </footer>
+			                </blockquote>
+			            </div>
+		            </div>
+		            
+		            <div class="carousel-item" th:if="${sliderAnnonces.size()>1}">
+		              	<div class="card  text-white p-3 cardSlider">
+			                <blockquote class="card-bodyquote p-3 blockquoteSlider">
+			                    <h4 style="display: flex;justify-content: center;"><spam th:text="${sliderAnnonces.get(1).getDateCreation()}"/></h4>
+			                    <p><spam th:text="${sliderAnnonces.get(1).getDescription()}"/></p>
+			                    <footer class="blockquote-footer">
+			                        <h5>
+			                            <cite title="Source Title" style="color:red"><spam th:text="${sliderAnnonces.get(1).getEtudiantAnnonces().size()}"/></cite>
+			                            Cadidatures
+			                        </h5>
+			                    </footer>
+			                </blockquote>
+			            </div>
+		            </div>
+		            
+		            <div class="carousel-item" th:if="${sliderAnnonces.size()>2}">
+		              	<div class="card text-white p-3 cardSlider">
+			                <blockquote class="card-bodyquote p-3 blockquoteSlider">
+			                	<h4 style="display: flex;justify-content: center;"><spam th:text="${sliderAnnonces.get(2).getDateCreation()}"/></h4>
+			                    <p><spam th:text="${sliderAnnonces.get(2).getDescription()}"/></p>
+			                    <footer class="blockquote-footer">
+			                        <h5>
+			                            <cite title="Source Title" style="color:red"><spam th:text="${sliderAnnonces.get(2).getEtudiantAnnonces().size()}"/></cite>
+			                            Cadidatures
+			                        </h5>
+			                    </footer>
+			                </blockquote>
+			            </div>
+		            </div>
+		            
+		            <div class="carousel-item" th:if="${sliderAnnonces.size()>3}">
+		              	<div class="card text-white p-3 cardSlider">
+			                <blockquote class="card-bodyquote p-3 blockquoteSlider">
+			                	<h4 style="display: flex;justify-content: center;"><spam th:text="${sliderAnnonces.get(3).getDateCreation()}"/></h4>
+			                    <p><spam th:text="${sliderAnnonces.get(3).getDescription()}"/></p>
+			                    <footer class="blockquote-footer">
+			                        <h5>
+			                            <cite title="Source Title" style="color:red"><spam th:text="${sliderAnnonces.get(3).getEtudiantAnnonces().size()}"/></cite>
+			                            Cadidatures
+			                        </h5>
+			                    </footer>
+			                </blockquote>
+			            </div>
+		            </div>
+	           </div>
+	           
+	           
+	          <!-- CONTROLS -->
+	          <a href="#slider" class="carousel-control-prev" data-slide="prev">
+	            <span class="carousel-control-prev-icon"></span>
+	          </a>
+	
+	          <a href="#slider" class="carousel-control-next" data-slide="next">
+	            <span class="carousel-control-next-icon"></span>
+	          </a>
+          	</div>
+          	
+          </div>
+          
+          <div class="d-flex justify-content-end row-hl" id="scrollspy">
+          	<a class="pb-4 item-hl " style="padding-right:100px" href="#publications">voir plus <i class="fas fa-arrow-alt-circle-right"></i></a>
+          </div>
+		<!-- lists des annoces -->
+    	
+    	
     	<div class="container" id="profilePic">
           <div id="profile-container">
              <image id="profileImage" src="imgs/entrepreneur2.jpg" />
@@ -202,55 +294,13 @@
         	</div>
         </div>
         
-        <!-- slider des annonces  -->
-        <div class="d-flex justify-content-center " style="padding:10px">
-	        <div id="slider" class="carousel slide mb-5" data-ride="carousel">
-	          <ol class="carousel-indicators">
-	            <li class="active" data-target="#slider" data-slide-to="0"></li>
-	            <li data-target="#slider" data-slide-to="1"></li>
-	            <li data-target="#slider" data-slide-to="2"></li>
-	          </ol>
-	          <div class="carousel-inner">
-	            <div class="carousel-item active">
-	              <img class="d-block img-fluid" src="https://source.unsplash.com/wgq4eit198Q/700x400" alt="First Slide">
-	              <div class="carousel-caption d-none d-md-block">
-	                <h3>Slide One</h3>
-	                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, illo?</p>
-	              </div>
-	            </div>
-	            <div class="carousel-item">
-	              <img class="d-block img-fluid" src="https://source.unsplash.com/WLUHO9A_xik/700x400" alt="Second Slide">
-	              <div class="carousel-caption d-none d-md-block">
-	                <h3>Slide Two</h3>
-	                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, illo?</p>
-	              </div>
-	            </div>
-	            <div class="carousel-item">
-	              <img class="d-block img-fluid" src="https://source.unsplash.com/4yta6mU66dE/700x400" alt="Third Slide">
-	              <div class="carousel-caption d-none d-md-block">
-	                <h3>Slide Three</h3>
-	                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, illo?</p>
-	              </div>
-	            </div>
-	          </div>
-	
-	          <!-- CONTROLS -->
-	          <a href="#slider" class="carousel-control-prev" data-slide="prev">
-	            <span class="carousel-control-prev-icon"></span>
-	          </a>
-	
-	          <a href="#slider" class="carousel-control-next" data-slide="next">
-	            <span class="carousel-control-next-icon"></span>
-	          </a>
-          	</div>
-          </div>
-		<!-- lists des annoces -->
-		
-		
-		<div class="d-flex justify-content-center " style="padding:10px">
-        	<button class="btn btn-primary d-block mb-3" data-toggle="collapse" data-target="#collapse-btn-1"> consulter tout les annoces que vous avez publier</button>
-        </div>
         
+		
+		<section id="publications">
+			<div class="d-flex justify-content-center " style="padding:10px">
+	        	<button class="btn btn-primary d-block mb-3" data-toggle="collapse" data-target="#collapse-btn-1"> consulter tout les annoces que vous avez publier</button>
+	        </div>
+        </section>
 		    <div class="collapse mb-5" id="collapse-btn-1">
 		      <div class="card">
 		        <div class="card-body">
@@ -261,11 +311,7 @@
 		    </div>
 
 
-	
-	
-	
-    	
-    
+
     </div>
 
 
@@ -342,5 +388,29 @@
           fasterPreview1( this );
       });
     </script>
+    
+    <script>
+    $('body').scrollspy({ target: '#scrollspy' });
+
+    // Add smooth scrolling
+    $('#scrollspy a').on('click', function (e) {
+      // Check for a hash value
+      if (this.hash !== '') {
+        // Prevent default behavior
+        e.preventDefault();
+
+        // Store hash
+        const hash = this.hash;
+
+        // Animate smooth scroll
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 900, function () {
+          // Add hash to URL after scroll
+          window.location.hash = hash;
+        });
+      }
+    });
+  </script>
 </body>
 </html>

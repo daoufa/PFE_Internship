@@ -228,12 +228,22 @@ public class HomeController {
 	}
 	
 	@GetMapping("/EntrepreneurProfile")
-	public String EntrepreneurProfile(Model model) {
+	public String EntrepreneurProfile(Model model,@RequestParam(name="page" , defaultValue="0") int page) {
 		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
 		if(user==null) return "login";
 		System.out.println(httpServletRequest.getRemoteUser());
 		Entrepreneur entrepreneur = entrepreneurRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
 		model.addAttribute("entrepreneur",entrepreneur);
+		
+		Page<Annonce> sliderAnnonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(0, 4));
+		model.addAttribute("sliderAnnonces",sliderAnnonces.getContent());//sliderAnnonces.getContent().get(0).getEtudiantAnnonces().size()
+
+
+		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 4));
+		model.addAttribute("annonces",annonces.getContent());
+		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("currentPage", page);
+		
 		return "profile";
 	}
 }

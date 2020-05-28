@@ -192,3 +192,37 @@ body {
 	margin-top: 50px;
 	background-color: rgba(200, 200, 200, 0.712);
 }
+
+.blockquoteSlider {
+	width: 900px;
+	height: 250px;
+}
+
+.blockquoteSlider > p {
+	height:120px;
+	display: flex;
+	justify-content: center;
+	padding-left:60px;
+	padding-right:60px;
+}
+
+.blockquoteSlider > h4 {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+	color: rgba(200, 200, 200, 0.712);
+}
+
+.blockquoteSlider > footer {
+	display: flex;
+	justify-content: center;
+}
+
+.cardSlider {
+	border-radius:15px ;
+	background-color: rgba(40, 40, 40, 0.712);
+}
+
+
+
+

@@ -87,6 +87,8 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		Annonce a = new Annonce("SQLi Stage", "sqli stage developpeur java ", "25/6/2020", "15/5/2020", true,"Rabat");
 		Annonce a1 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", "02/02/2020", "15/5/2020", true,"casablanca");
 		Annonce a2 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", "7/03/2020", "15/5/2020", true,"marrakech");
+		Annonce a11 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", "02/02/2020", "15/5/2020", true,"casablanca");
+		Annonce a21 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", "7/03/2020", "15/5/2020", true,"marrakech");
 		long id = 1l;
 		Entrepreneur entrep = null;
 		Optional<Entrepreneur> result = entrepreneurRepository.findById(1l);
@@ -98,6 +100,10 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		}
 		a.setEntrepreneur(entrep);
 		a = annonceRepository.save(a);
+		a11.setEntrepreneur(entrep);
+		a11 = annonceRepository.save(a11);
+		a21.setEntrepreneur(entrep);
+		a21= annonceRepository.save(a21);
 		result = entrepreneurRepository.findById(2l);
 		if (result.isPresent()) {
 			entrep = result.get();
@@ -177,6 +183,11 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		user2.addRole(role1);user2.addRole(role2);
 		userRepository.save(user2);
 		
+		
+		User user3=new User();
+		user3.setUsername("abdeer@outlook.fr");user3.setPassword(bcp.encode("1"));user3.setActive(true);
+		user3.addRole(role4);
+		userRepository.save(user3);
 		/*
 		 * end
 		 */
