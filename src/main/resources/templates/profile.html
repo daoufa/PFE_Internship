@@ -298,18 +298,95 @@
 		
 		<section id="publications">
 			<div class="d-flex justify-content-center " style="padding:10px">
-	        	<button class="btn btn-primary d-block mb-3" data-toggle="collapse" data-target="#collapse-btn-1"> consulter tout les annoces que vous avez publier</button>
+			<!--  adding icon -->
+	        	<button class="btn btn-primary d-block mb-3" data-toggle="collapse" data-target="#collapse-btn-a">
+	        		<i class="fa fa-arrow-down" aria-hidden="true"></i> 
+	        		consulter tout les annoces que vous avez publier 
+	        		<i class="fa fa-arrow-down" aria-hidden="true"></i>
+	        	</button>
 	        </div>
         </section>
-		    <div class="collapse mb-5" id="collapse-btn-1">
-		      <div class="card">
-		        <div class="card-body">
-		          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit eius libero quisquam nobis explicabo vel non necessitatibus
-		          ipsum doloribus cupiditate voluptate recusandae quo autem error debitis, sed, minima repellendus commodi.
-		        </div>
+		    <div class="collapse mb-5" id="collapse-btn-a">
+		    
+		    	<div th:each="a,status:${annonces}">
+        			<div class="row">
+        				<div class="col-sm-6 col-md-8 col-lg-9 col-xl-10" >
+					        <div class="py-4">
+					          <h6 class="text-danger font-weight-bold " ><i class="fas fa-graduation-cap mr-2"></i><spam th:text="${a.titre}"></spam></h6>
+					          <div class="card p-3 ">
+					            <blockquote>
+					                <p th:text="${a.description}" ></p>
+					                <footer>
+					                    <small class="pr-4">
+					                      <i class="fas fa-calendar-alt mr-2"></i><spam th:text="${a.dateCreation}"></spam>
+					                    </small>
+					                    <small class="pr-4">
+					                      <i class="fas fa-map-marker-alt mr-2"></i><spam th:text="${a.lieu}"></spam>
+					                    </small>
+					                    <small class="pr-4">
+					                      <cite title="Source Title"><i class="fas fa-address-card mr-2"></i><spam th:text="${a.entrepreneur.nomEntreprise}" /></cite>
+					                    </small>
+					                </footer>
+					            </blockquote>
+					         </div>
+					       </div>
+					       
+					       <div class="collapse mb-5" th:id="'collapse-btn-'+${status.index}">
+					       		<div class="card mb-3" style="background-color: rgba(100, 100, 100, 0.712);border-radius:10px ;">
+						            <div class="card-body" >
+						                <h4 class="card-title pb-3" align="center" style="border-bottom:3px solid #bd9334;color:#bd9334;border-radius:15px ;">List des candidats</h4>
+							                <div th:each="e,status:${a.etudiantAnnonces}" >
+							                	<!-- MODAL TRIGGER -->
+							                	<button class="btn btn-outline-primary p-4 m-3" data-toggle="modal" data-target="#candidatModal">
+							                		<spam th:text="${e.etudiant.nom}+' '+${e.etudiant.prenom}" />
+							                	</button>
+							                	<!-- MODAL -->
+							                	<div class="modal" id="candidatModal">
+											      <div class="modal-dialog">
+											        <div class="modal-content">
+											          <div class="modal-header">
+											            <h5 class="modal-title"><spam th:text="${e.DateCreation}" /></h5>
+											            <button class="close" data-dismiss="modal">&times;</button>
+											          </div>
+											          <div class="modal-body">
+											          	<spam th:text="${e.etudiant.nom}+' '+${e.etudiant.prenom}" /><br>
+											            <spam th:text="${e.etudiant.description}" />
+											          </div>
+											          <div class="modal-footer">
+											            <button class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+											          </div>
+											        </div>
+											      </div>
+											    </div>
+							                	<!-- MODAL end -->
+							                </div>
+						            </div>
+						        </div>
+					       </div>
+					    </div>
+				     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" >
+				     	<div class="card mt-5" style="background-color: rgba(200, 200, 200, 0.9);border-radius: 40px;border:3px solid #bd9334;">
+				            <div class="card-body" style="padding-bottom:0px">
+				                <h5 >
+		                            <cite title="Source Title" style="color:red;display: flex;justify-content: center;font-weight: bold;"><spam th:text="${sliderAnnonces.get(status.index).getEtudiantAnnonces().size()}"/></cite>
+		                            Cadidatures<br>
+		                            
+		                            	<div style="display: flex;justify-content: center;font-weight: bold;padding-top:10px;margin-top:10px;border-top:1px solid black;color:#0c4ac5" data-toggle="collapse" th:data-target="'#collapse-btn-'+${status.index}">
+		                            			<i class="fas fa-arrow-alt-circle-down" ></i>
+		                            	</div>
+		                            
+		                            
+			                    </h5>
+				            </div>
+				        </div>
+				     </div>
+			       </div>
 		      </div>
+		      
+		      	
+		      
 		    </div>
-
+		    
 
 
     </div>
@@ -390,27 +467,44 @@
     </script>
     
     <script>
-    $('body').scrollspy({ target: '#scrollspy' });
-
-    // Add smooth scrolling
-    $('#scrollspy a').on('click', function (e) {
-      // Check for a hash value
-      if (this.hash !== '') {
-        // Prevent default behavior
-        e.preventDefault();
-
-        // Store hash
-        const hash = this.hash;
-
-        // Animate smooth scroll
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 900, function () {
-          // Add hash to URL after scroll
-          window.location.hash = hash;
-        });
-      }
-    });
-  </script>
+	    $('body').scrollspy({ target: '#scrollspy' });
+	
+	    // Add smooth scrolling
+	    $('#scrollspy a').on('click', function (e) {
+	      // Check for a hash value
+	      if (this.hash !== '') {
+	        // Prevent default behavior
+	        e.preventDefault();
+	
+	        // Store hash
+	        const hash = this.hash;
+	
+	        // Animate smooth scroll
+	        $('html, body').animate({
+	          scrollTop: $(hash).offset().top
+	        }, 900, function () {
+	          // Add hash to URL after scroll
+	          window.location.hash = hash;
+	        });
+	      }
+	    });
+	  </script>
+	  
+	  <script >
+		// Init Popover
+		  $('[data-toggle="popover"]').popover();
+	
+		    function showPopover() {
+		      $('#hello').popover('show');
+		    }
+	
+		    function hidePopover() {
+		      $('#hello').popover('hide');
+		    }
+	
+		    function togglePopover() {
+		      $('#hello').popover('toggle');
+		    }
+	  </script>
 </body>
 </html>

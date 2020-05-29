@@ -239,8 +239,8 @@ public class HomeController {
 		model.addAttribute("sliderAnnonces",sliderAnnonces.getContent());//sliderAnnonces.getContent().get(0).getEtudiantAnnonces().size()
 
 
-		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 4));
-		model.addAttribute("annonces",annonces.getContent());
+		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 9));
+		model.addAttribute("annonces",annonces.getContent());//annonces.getContent().get(0).getEtudiantAnnonces().get(0).getEtudiant().getDescription()
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
 		model.addAttribute("currentPage", page);
 		

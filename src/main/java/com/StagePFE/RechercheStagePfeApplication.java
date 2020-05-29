@@ -61,7 +61,7 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", null,
 				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech","06000666", null));
 		Etudiant e3 = etudiantRepository.save(
-				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar", "casa", "06111616", null));
+				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar is a great man Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.", "casa", "06111616", null));
 		Etudiant e4 = etudiantRepository.save(new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null,
 				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545", null));
 		Entrepreneur p1 = entrepreneurRepository.save(new Entrepreneur("abdeer@outlook.fr", "daoufa", "abderrahman",
@@ -141,7 +141,22 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		EtudiantAnnonce etAnn = new EtudiantAnnonce();
 		etAnn.setAnnonce(a);
 		etAnn.setTypeRelation("postuler");
+		etAnn.setDateCreation("12/12/2020");
+		EtudiantAnnonce etAnn1 = new EtudiantAnnonce();
+		etAnn.setAnnonce(a);
+		etAnn.setTypeRelation("postuler");
+		EtudiantAnnonce etAnn2 = new EtudiantAnnonce();
+		etAnn.setAnnonce(a);
+		etAnn1.setAnnonce(a11);
+		etAnn2.setAnnonce(a21);
+		etAnn.setTypeRelation("postuler");
+		etAnn1.setTypeRelation("postuler");
+		etAnn2.setTypeRelation("postuler");
+		etAnn1.setDateCreation("2/2/2020");
+		etAnn2.setDateCreation("20/5/2020");
 		e33.addEtudiantAnnonce(etAnn);
+		e33.addEtudiantAnnonce(etAnn1);
+		e33.addEtudiantAnnonce(etAnn2);
 		etudiantRepository.save(e33);
 
 		Optional<Etudiant> result3 = etudiantRepository.findById(3l);
