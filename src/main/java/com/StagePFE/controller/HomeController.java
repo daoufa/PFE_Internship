@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,7 @@ import com.StagePFE.dao.UserRepository;
 import com.StagePFE.entities.Annonce;
 import com.StagePFE.entities.Entrepreneur;
 import com.StagePFE.entities.Etudiant;
+import com.StagePFE.entities.EtudiantAnnonce;
 import com.StagePFE.entities.Profile;
 import com.StagePFE.entities.Role;
 import com.StagePFE.entities.User;
@@ -110,20 +112,6 @@ public class HomeController {
 				i++;
 			}
 		}
-		System.out.println("localite");
-		System.out.println(localites.toString());
-		
-		System.out.println("motscles");
-		System.out.println(motscles.toString());
-		
-		System.out.println("entreprise");
-		entreprise = "%"+entreprise+"%";
-		System.out.println(entreprise);
-		/*
-		 * List<Annonce> annonces=annonceRepository.searchFilter(motscles);
-		model.addAttribute("pages", new int[1]);
-		model.addAttribute("annonces",annonces);
-		 * */
 		Page<Annonce> annonces=annonceRepository.searchFilter(motscles, PageRequest.of(page, 9));//,localites,entreprise
 		System.out.println(annonces.getNumberOfElements());
 		model.addAttribute("annonces",annonces.getContent());
@@ -207,6 +195,69 @@ public class HomeController {
 		return "index";
 	}
 	
+	
+	
+	@GetMapping("/postuler")
+	public String postuler(Model model,
+			@RequestParam(name="annonce" ) Long annonceId,
+			@RequestParam(name="page" , defaultValue="0") int page,
+			@RequestParam(name="motcle" , defaultValue="") String motcle,
+			@RequestParam(name="localite" , defaultValue="") String lieu) {
+		Annonce a = null;
+		List<Long> listannoncesId = null;
+		// get authenticated user
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null)new RedirectView("/login");
+		
+		// check if user is an "etudiant"
+		List<Role> roles = user.getRoles();
+		Role etudiantRole = new Role();
+		etudiantRole.setRole("ETUDIANT");
+		
+		if(roles.contains(etudiantRole)) {
+			
+			// get authenticated "etudiant"
+			Etudiant etudiant = etudiantRepository.findByEmail(user.getUsername()).get(0);
+			// get list of annonces
+			for(EtudiantAnnonce etudiantAnnonce : etudiant.getEtudiantAnnonces()) {
+				System.out.println(etudiantAnnonce.getAnnonce());
+				System.out.println(etudiantAnnonce.getAnnonce().getId());
+				
+				listannoncesId.add(etudiantAnnonce.getAnnonce().getId());
+			}
+			//get selected "annonce"
+			Optional<Annonce> result = annonceRepository.findById(annonceId);
+			if (result.isPresent()) {
+				a = result.get();
+			}
+			System.out.println(listannoncesId.contains(1));
+			// register info about application
+			EtudiantAnnonce etAnn = new EtudiantAnnonce();
+			etAnn.setAnnonce(a);
+			etAnn.setTypeRelation("postuler");
+			etAnn.setDateCreation("12/12/2020");
+			etudiant.addEtudiantAnnonce(etAnn);
+			etudiantRepository.save(etudiant);
+			
+		}else {
+			return "login";
+		}
+		
+		
+		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
+		model.addAttribute("annonces",annonces.getContent());
+		model.addAttribute("listannoncesId",listannoncesId);
+		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("motcle",new String());
+		model.addAttribute("localite",new String());
+		
+		return "index";
+	}
+	
+	
+	
+	
 	@GetMapping("/profile")
 	public RedirectView redirectProfile() {
 		
@@ -240,7 +291,7 @@ public class HomeController {
 
 
 		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 9));
-		model.addAttribute("annonces",annonces.getContent());//annonces.getContent().get(0).getEtudiantAnnonces().get(0).getEtudiant().getDescription()
+		model.addAttribute("annonces",annonces.getContent());//annonces.getContent().get(0).getEtudiantAnnonces().get(0).getDateCreation()
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
 		model.addAttribute("currentPage", page);
 		

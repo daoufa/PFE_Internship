@@ -337,7 +337,7 @@
 						                <h4 class="card-title pb-3" align="center" style="border-bottom:3px solid #bd9334;color:#bd9334;border-radius:15px ;">List des candidats</h4>
 							                <div th:each="e,status:${a.etudiantAnnonces}" >
 							                	<!-- MODAL TRIGGER -->
-							                	<button class="btn btn-outline-primary p-4 m-3" data-toggle="modal" data-target="#candidatModal">
+							                	<button class="btn btn-outline-primary p-4 m-3" data-toggle="modal" data-target="#candidatModal" >
 							                		<spam th:text="${e.etudiant.nom}+' '+${e.etudiant.prenom}" />
 							                	</button>
 							                	<!-- MODAL -->

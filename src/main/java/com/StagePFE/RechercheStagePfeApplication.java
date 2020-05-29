@@ -53,7 +53,7 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		SimpleDateFormat smpl = new SimpleDateFormat("yyyyy-mm-dd");
-		Etudiant e1 = new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null, "c:/photos", "E:/videos",
+		Etudiant e1 = new Etudiant("a@outlook.fr", "daoufa", "abderrahman", null, "c:/photos", "E:/videos",
 				"first etudiant", "marrakech", "06535", null);
 
 		e1.setDateCreation(smpl.parse("2017-11-15"));
@@ -61,8 +61,8 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", null,
 				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech","06000666", null));
 		Etudiant e3 = etudiantRepository.save(
-				new Etudiant("omar@mail.com", "omar", "boskri", null, "c:/photos", "c:/videos", "boskri omar is a great man Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.", "casa", "06111616", null));
-		Etudiant e4 = etudiantRepository.save(new Etudiant("abdeer@outlook.fr", "daoufa", "abderrahman", null,
+				new Etudiant("daoufa@mail.com", "daoufa", "abderrahman", null, "c:/photos", "c:/videos", "daoufa abderrahman is a great man Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.", "casa", "06111616", null));
+		Etudiant e4 = etudiantRepository.save(new Etudiant("b@outlook.fr", "daoufa", "abderrahman", null,
 				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545", null));
 		Entrepreneur p1 = entrepreneurRepository.save(new Entrepreneur("abdeer@outlook.fr", "daoufa", "abderrahman",
 				new Date(), "c:/photos", "E:/videos", "first entrepreneur", "marrakech","0654412", "SQLi"));
@@ -203,6 +203,17 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		user3.setUsername("abdeer@outlook.fr");user3.setPassword(bcp.encode("1"));user3.setActive(true);
 		user3.addRole(role4);
 		userRepository.save(user3);
+		
+		
+		User user4=new User();
+		user4.setUsername("daoufa@mail.com");user4.setPassword(bcp.encode("2"));user4.setActive(true);
+		user4.addRole(role3);
+		userRepository.save(user4);
+		
+		User user5=new User();
+		user5.setUsername("a@outlook.fr");user5.setPassword(bcp.encode("2"));user5.setActive(true);
+		user5.addRole(role3);
+		userRepository.save(user5);
 		/*
 		 * end
 		 */

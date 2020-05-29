@@ -152,7 +152,15 @@
        <div th:each="a:${annonces}">
         
         <div class="p-4">
-          <h6 class="text-danger font-weight-bold " ><i class="fas fa-graduation-cap mr-2"></i><spam th:text="${a.titre}"></spam></h6>
+          <h6 class="text-danger font-weight-bold " ><i class="fas fa-graduation-cap mr-2"></i>
+          	<spam th:text="${a.titre}"></spam><!-- 
+				   <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" th:if="${listannoncesId?.contains(a.id)}" style="float:right;color:green"> <i class="fas fa-plus " ></i></a>
+				 --><!-- ELSE -->
+				  <!--  <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" th:unless="${listannoncesId?.contains(a.id)}" style="float:right;">Postuler <i class="fas fa-plus " ></i></a>
+				 -->
+          	 <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" style="float:right;">Postuler <i class="fas fa-plus " ></i>
+          	</a>
+          </h6>
           <div class="card p-3 ">
             <blockquote>
                 <p th:text="${a.description}" ></p>
