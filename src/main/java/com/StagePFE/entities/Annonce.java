@@ -2,6 +2,7 @@ package com.StagePFE.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -39,12 +40,12 @@ public class Annonce implements Serializable {
 	private String titre;
 	@Column(columnDefinition="text")
 	private String description;
-	private String dateCreation;
-	private String dateExperaiton;
+	private Date dateCreation;
+	private Date dateExperaiton;
 	private Boolean isOuvert;
 	private String lieu;
 
-	public Annonce(String titre, String description, String dateCreation, String dateExperaiton, Boolean isOuvert, String lieu) {
+	public Annonce(String titre, String description, Date dateCreation, Date dateExperaiton, Boolean isOuvert, String lieu) {
 		super();
 		this.titre = titre;
 		this.description = description;

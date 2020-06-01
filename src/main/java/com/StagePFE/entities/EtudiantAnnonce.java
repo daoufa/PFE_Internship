@@ -1,6 +1,7 @@
 package com.StagePFE.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,7 @@ public class EtudiantAnnonce implements Serializable {
 	@JoinColumn(name = "etudiant_id")
 	private Etudiant etudiant;
 
-	private String dateCreation;
+	private Date dateCreation;
 
 	// regarder plus tard OU Postuler
 	private String typeRelation;

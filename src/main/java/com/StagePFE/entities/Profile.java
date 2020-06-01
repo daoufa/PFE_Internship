@@ -46,6 +46,7 @@ public class Profile implements Serializable {
 		this.video = video;
 		this.description = description;
 		this.adresse = adresse;
+		this.phoneNmbr = phoneNmbr;
 	}
 	@Override
 	public String toString() {

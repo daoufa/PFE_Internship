@@ -1,6 +1,7 @@
 package com.StagePFE.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class LigneRegarderPlusTardVisiteur implements Serializable {
 	@JoinColumn(name="visiteur_id")
 	private Visiteur visiteur;
 
-	private String DateDAjout;
+	private Date DateDAjout;
 
 	@Override
 	public String toString() {

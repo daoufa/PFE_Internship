@@ -53,28 +53,28 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		SimpleDateFormat smpl = new SimpleDateFormat("yyyyy-mm-dd");
-		Etudiant e1 = new Etudiant("a@outlook.fr", "daoufa", "abderrahman", null, "c:/photos", "E:/videos",
+		Etudiant e1 = new Etudiant("a@outlook.fr", "daoufa", "abderrahman", new Date(), "c:/photos", "E:/videos",
 				"first etudiant", "marrakech", "06535", null);
 
 		e1.setDateCreation(smpl.parse("2017-11-15"));
 		e1 = etudiantRepository.save(e1);
-		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", null,
+		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", new Date(),
 				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech","06000666", null));
 		Etudiant e3 = etudiantRepository.save(
-				new Etudiant("daoufa@mail.com", "daoufa", "abderrahman", null, "c:/photos", "c:/videos", "daoufa abderrahman is a great man Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.", "casa", "06111616", null));
-		Etudiant e4 = etudiantRepository.save(new Etudiant("b@outlook.fr", "daoufa", "abderrahman", null,
+				new Etudiant("daoufa@mail.com", "daoufa", "abderrahman", new Date(), "c:/photos", "c:/videos", "daoufa abderrahman Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.", "casa", "06111616", null));
+		Etudiant e4 = etudiantRepository.save(new Etudiant("b@outlook.fr", "daoufa", "abderrahman", new Date(),
 				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545", null));
 		Entrepreneur p1 = entrepreneurRepository.save(new Entrepreneur("abdeer@outlook.fr", "daoufa", "abderrahman",
 				new Date(), "c:/photos", "E:/videos", "first entrepreneur", "marrakech","0654412", "SQLi"));
 		p1.setNomEntreprise("SQLi");
-		Entrepreneur p2 = entrepreneurRepository.save(new Entrepreneur("mosameh.meryem@Gmail.com", "mosameh", "meryem",
-				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "065234", "STG"));
+		Entrepreneur p2 = entrepreneurRepository.save(new Entrepreneur("mosameh1@Gmail.com", "mosameh", "meryem",
+				new Date(), "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "065234", "STG"));
 		p2.setNomEntreprise("Google");
-		Entrepreneur p3 = entrepreneurRepository.save(new Entrepreneur("mosameh.meryem@Gmail.com", "mosameh", "meryem",
-				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "75755","OCP"));
+		Entrepreneur p3 = entrepreneurRepository.save(new Entrepreneur("mosameh2@Gmail.com", "mosameh", "meryem",
+				new Date(), "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "75755","OCP"));
 		p3.setNomEntreprise("facebook");
-		Entrepreneur p4 = entrepreneurRepository.save(new Entrepreneur("mosameh.meryem@Gmail.com", "mosameh", "meryem",
-				null, "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "2454","RIDAL"));
+		Entrepreneur p4 = entrepreneurRepository.save(new Entrepreneur("mosameh3@Gmail.com", "mosameh", "meryem",
+				new Date(), "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "2454","RIDAL"));
 		p4.setNomEntreprise("SQLi");
 		/*
 		 * EtudiantAnnonce etAnn =new EtudiantAnnonce(); Annonce a=new
@@ -84,11 +84,11 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		 * etAnn=etudiantAnnonceRepository.save(etAnn); System.out.println(etAnn);
 		 * e1.addEtudiantAnnonce(etAnn); etudiantRepository.save(e1);
 		 */
-		Annonce a = new Annonce("SQLi Stage", "sqli stage developpeur java ", "25/6/2020", "15/5/2020", true,"Rabat");
-		Annonce a1 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", "02/02/2020", "15/5/2020", true,"casablanca");
-		Annonce a2 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", "7/03/2020", "15/5/2020", true,"marrakech");
-		Annonce a11 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", "02/02/2020", "15/5/2020", true,"casablanca");
-		Annonce a21 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", "7/03/2020", "15/5/2020", true,"marrakech");
+		Annonce a = new Annonce("SQLi Stage", "sqli stage developpeur java ", new Date(), new Date(), true,"Rabat");
+		Annonce a1 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", new Date(), new Date(), true,"casablanca");
+		Annonce a2 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", new Date(), new Date(), true,"marrakech");
+		Annonce a11 = new Annonce("SQLi emplois", "daoufa officiis velit accusamus omnis quasi. Incidunt?", new Date(), new Date(), true,"casablanca");
+		Annonce a21 = new Annonce("google", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt iure ex a mollitia corrupti eius saepe? Animi quibusdam autem molestias minus placeat explicabo officiis velit accusamus omnis quasi. Incidunt?", new Date(), new Date(), true,"marrakech");
 		long id = 1l;
 		Entrepreneur entrep = null;
 		Optional<Entrepreneur> result = entrepreneurRepository.findById(1l);
@@ -141,7 +141,7 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		EtudiantAnnonce etAnn = new EtudiantAnnonce();
 		etAnn.setAnnonce(a);
 		etAnn.setTypeRelation("postuler");
-		etAnn.setDateCreation("12/12/2020");
+		etAnn.setDateCreation(new Date());
 		EtudiantAnnonce etAnn1 = new EtudiantAnnonce();
 		etAnn.setAnnonce(a);
 		etAnn.setTypeRelation("postuler");
@@ -152,8 +152,8 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		etAnn.setTypeRelation("postuler");
 		etAnn1.setTypeRelation("postuler");
 		etAnn2.setTypeRelation("postuler");
-		etAnn1.setDateCreation("2/2/2020");
-		etAnn2.setDateCreation("20/5/2020");
+		etAnn1.setDateCreation(new Date());
+		etAnn2.setDateCreation(new Date());
 		e33.addEtudiantAnnonce(etAnn);
 		e33.addEtudiantAnnonce(etAnn1);
 		e33.addEtudiantAnnonce(etAnn2);
@@ -214,6 +214,11 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		user5.setUsername("a@outlook.fr");user5.setPassword(bcp.encode("2"));user5.setActive(true);
 		user5.addRole(role3);
 		userRepository.save(user5);
+		
+		User user6=new User();
+		user6.setUsername("mosameh.meryem@Gmail.com");user6.setPassword(bcp.encode("2"));user6.setActive(true);
+		user6.addRole(role3);
+		userRepository.save(user6);
 		/*
 		 * end
 		 */

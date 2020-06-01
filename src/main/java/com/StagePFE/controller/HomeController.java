@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.StagePFE.dao.AnnonceRepository;
@@ -35,6 +36,7 @@ import com.StagePFE.entities.Profile;
 import com.StagePFE.entities.Role;
 import com.StagePFE.entities.User;
 
+import aj.org.objectweb.asm.Attribute;
 import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 @Controller
 public class HomeController {
@@ -73,9 +75,39 @@ public class HomeController {
 			@RequestParam(name="motcle" , defaultValue="") String motcle,
 			@RequestParam(name="localite" , defaultValue="") String lieu
 			) {
+		List<Long> listannoncesId = new ArrayList<Long>();
+		boolean isEntrepreneur = false;
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user!=null) {
+			List<Role> roles = user.getRoles();
+			
+			Role entrepreneurRole = new Role();
+			entrepreneurRole.setRole("ENTREPRENEUR");
+			
+			if(roles.contains(entrepreneurRole))isEntrepreneur = true;
+			
+			
+			Role etudiantRole = new Role();
+			etudiantRole.setRole("ETUDIANT");
+			
+			if(roles.contains(etudiantRole)) {
+				isEntrepreneur = false;
+				Etudiant etudiant = etudiantRepository.findByEmail(user.getUsername()).get(0);
+				for(EtudiantAnnonce etudiantAnnonce : etudiant.getEtudiantAnnonces()) {
+					System.out.println(etudiantAnnonce.getAnnonce());
+					System.out.println(etudiantAnnonce.getAnnonce().getId());
+					listannoncesId.add(etudiantAnnonce.getAnnonce().getId());
+				}
+			}
+			
+		}
+		
+		
 		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
 		model.addAttribute("annonces",annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("listannoncesId",listannoncesId);
+		model.addAttribute("isEntrepreneur",isEntrepreneur);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("motcle",motcle);
 		model.addAttribute("localite",lieu);
@@ -198,13 +230,12 @@ public class HomeController {
 	
 	
 	@GetMapping("/postuler")
-	public String postuler(Model model,
+	public RedirectView postuler(RedirectAttributes attributes,
 			@RequestParam(name="annonce" ) Long annonceId,
 			@RequestParam(name="page" , defaultValue="0") int page,
 			@RequestParam(name="motcle" , defaultValue="") String motcle,
 			@RequestParam(name="localite" , defaultValue="") String lieu) {
 		Annonce a = null;
-		List<Long> listannoncesId = null;
 		// get authenticated user
 		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
 		if(user==null)new RedirectView("/login");
@@ -218,41 +249,32 @@ public class HomeController {
 			
 			// get authenticated "etudiant"
 			Etudiant etudiant = etudiantRepository.findByEmail(user.getUsername()).get(0);
-			// get list of annonces
-			for(EtudiantAnnonce etudiantAnnonce : etudiant.getEtudiantAnnonces()) {
-				System.out.println(etudiantAnnonce.getAnnonce());
-				System.out.println(etudiantAnnonce.getAnnonce().getId());
-				
-				listannoncesId.add(etudiantAnnonce.getAnnonce().getId());
-			}
+			
 			//get selected "annonce"
 			Optional<Annonce> result = annonceRepository.findById(annonceId);
 			if (result.isPresent()) {
 				a = result.get();
 			}
-			System.out.println(listannoncesId.contains(1));
+			
 			// register info about application
 			EtudiantAnnonce etAnn = new EtudiantAnnonce();
 			etAnn.setAnnonce(a);
 			etAnn.setTypeRelation("postuler");
-			etAnn.setDateCreation("12/12/2020");
+			etAnn.setDateCreation(new Date());
 			etudiant.addEtudiantAnnonce(etAnn);
 			etudiantRepository.save(etudiant);
 			
+			// get list of annonces
+			
 		}else {
-			return "login";
+			return new RedirectView("/login");
 		}
 		
+		attributes.addAttribute("currentPage", page);
+		attributes.addAttribute("motcle",motcle);
+		attributes.addAttribute("localite",lieu);
 		
-		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
-		model.addAttribute("annonces",annonces.getContent());
-		model.addAttribute("listannoncesId",listannoncesId);
-		model.addAttribute("pages", new int[annonces.getTotalPages()]);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("motcle",new String());
-		model.addAttribute("localite",new String());
-		
-		return "index";
+		return new RedirectView("/index");
 	}
 	
 	
@@ -287,11 +309,59 @@ public class HomeController {
 		model.addAttribute("entrepreneur",entrepreneur);
 		
 		Page<Annonce> sliderAnnonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(0, 4));
-		model.addAttribute("sliderAnnonces",sliderAnnonces.getContent());//sliderAnnonces.getContent().get(0).getEtudiantAnnonces().size()
+		model.addAttribute("sliderAnnonces",sliderAnnonces.getContent());
 
 
 		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 9));
-		model.addAttribute("annonces",annonces.getContent());//annonces.getContent().get(0).getEtudiantAnnonces().get(0).getDateCreation()
+		model.addAttribute("annonces",annonces.getContent());
+		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("currentPage", page);
+		
+		return "profile";
+	}
+	
+	@PostMapping("/modifierProfileEntrepreneur")
+	public String modifierProfileEntrepreneur(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
+			@RequestParam(name="ancientmdp") String ancientmdp,
+			@RequestParam(name="nouveaumdp") int nouveaumdp,
+			@RequestParam(name="page" , defaultValue="0") int page,
+			@RequestParam(name="motcle" , defaultValue="") String motcle,
+			@RequestParam(name="localite" , defaultValue="") String lieu) {
+//		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
+//		
+//		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+//		if(user==null) return "login";
+//		System.out.println(user.getPassword());
+//		String mdpA = user.getPassword();
+//		System.out.println(mdpA);
+//		String mdpN = bcp.encode(Integer.toString(nouveaumdp));
+//		
+//		if(mdpA==mdpN) {
+//			user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(nouveaumdp)));user.setActive(true);
+//			user.addRole(roleRepository.findByRole("ENTREPRENEUR"));
+//			userRepository.save(user);
+//		}
+		
+		Entrepreneur entrepreneur = new Entrepreneur();
+		Optional<Entrepreneur> result = entrepreneurRepository.findById(e.getId());
+		if (result.isPresent()) {
+			entrepreneur = result.get();
+		}
+		
+		entrepreneur.setAdresse(e.getAdresse());entrepreneur.setDescription(e.getDescription());entrepreneur.setEmail(e.getEmail());entrepreneur.setNom(e.getNom());
+		entrepreneur.setNomEntreprise(e.getNomEntreprise());entrepreneur.setPhoneNmbr(e.getPhoneNmbr());entrepreneur.setPrenom(e.getPrenom());entrepreneur.setPhoto(e.getPhoto());
+		entrepreneurRepository.save(entrepreneur);
+		
+		
+		
+//		redirection vers profile
+		model.addAttribute("entrepreneur",entrepreneur);
+		
+		Page<Annonce> sliderAnnonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(0, 4));
+		model.addAttribute("sliderAnnonces",sliderAnnonces.getContent());
+
+		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 9));
+		model.addAttribute("annonces",annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
 		model.addAttribute("currentPage", page);
 		

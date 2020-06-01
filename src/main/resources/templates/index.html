@@ -125,9 +125,6 @@
                     <a class="nav-link active text-white aHover"  href="/index">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link aHover" href="#">Derniers Postes</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link aHover" id="day" href="#">1 day 12 h</a> 
                 </li>
                 <li class="nav-item">
@@ -153,13 +150,12 @@
         
         <div class="p-4">
           <h6 class="text-danger font-weight-bold " ><i class="fas fa-graduation-cap mr-2"></i>
-          	<spam th:text="${a.titre}"></spam><!-- 
-				   <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" th:if="${listannoncesId?.contains(a.id)}" style="float:right;color:green"> <i class="fas fa-plus " ></i></a>
-				 --><!-- ELSE -->
-				  <!--  <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" th:unless="${listannoncesId?.contains(a.id)}" style="float:right;">Postuler <i class="fas fa-plus " ></i></a>
-				 -->
-          	 <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" style="float:right;">Postuler <i class="fas fa-plus " ></i>
-          	</a>
+          	<spam th:text="${a.titre}"></spam>
+				<spam th:if="${!isEntrepreneur}">  <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" th:if="${#lists.contains(listannoncesId, a.id)}"  style="float:right;color:green">déjà postulé <i class="fa fa-check" aria-hidden="true"></i></a></spam> 
+				 <!-- ELSE -->
+				 <spam th:if="${!isEntrepreneur}">   <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" th:unless="${#lists.contains(listannoncesId, a.id)}" style="float:right;">Postuler <i class="fas fa-plus " ></i></a></spam>
+          	 <!-- <a th:href="@{/postuler(annonce=${a.id},page=${currentPage},motcle=${motcle},localite=${localite})}" style="float:right;">Postuler <i class="fas fa-plus " ></i>
+          	</a> -->
           </h6>
           <div class="card p-3 ">
             <blockquote>

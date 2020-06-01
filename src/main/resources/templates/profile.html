@@ -125,9 +125,6 @@
                     <a class="nav-link active text-white aHover"  href="/index">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link aHover" href="#">Derniers Postes</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link aHover" id="day" href="#">1 day 12 h</a> 
                 </li>
                 <li class="nav-item">
@@ -243,7 +240,7 @@
 	    <div class="profileLine" >
     		<div class="card bg-dark text-white" style="margin: 20px;border-radius: 20px;">
                 <blockquote class="card-bodyquote" style="margin: 0px">
-                    <h4>&emsp; <span th:text="${entrepreneur.nom}"/>  <span th:text="${entrepreneur.prenom}"/>&emsp;</h4> 
+                    <h4>&emsp; <span th:text="${entrepreneur.nom}"/>  <span th:text="${entrepreneur.prenom}"/></h4> 
                 </blockquote>
             </div>
     	</div>
@@ -277,7 +274,7 @@
 		    <div class="d-flex justify-content-around row-hl">
 		      	<div class="p-4 item-hl">
 			      	<div class="card mb-3 discInfo">
-			      	<div class="card-header">Entreprise </div>
+			      	<div class="card-header">Entreprise</div>
 			      		<div class="card-header"><span th:text="${entrepreneur.nomEntreprise}"/> </div>
 					</div>
 				</div>
@@ -289,23 +286,105 @@
             </div>
         </div>
         
-        <div class="d-flex justify-content-center " style=" height:450px">
+        <!-- <div class="d-flex justify-content-center " style=" height:450px">
         	<div id="videoPresentatif">
         	</div>
-        </div>
+        </div> -->
         
         
 		
 		<section id="publications">
-			<div class="d-flex justify-content-center " style="padding:10px">
+			<div class="d-flex justify-content-around " style="padding:10px">
 			<!--  adding icon -->
 	        	<button class="btn btn-primary d-block mb-3" data-toggle="collapse" data-target="#collapse-btn-a">
 	        		<i class="fa fa-arrow-down" aria-hidden="true"></i> 
 	        		consulter tout les annoces que vous avez publier 
 	        		<i class="fa fa-arrow-down" aria-hidden="true"></i>
 	        	</button>
+	        	
+	        	<button class="btn btn-danger d-block mb-3" data-toggle="modal" data-target="#model-btn-edit">
+	        		modifier vos informations
+	        		&emsp;<i class="fas fa-edit"></i>
+	        	</button>
 	        </div>
         </section>
+        
+        <!-- MODAL -->
+        <div class="modal"  th:id="model-btn-edit">
+	      <div class="modal-dialog" style="margin-left:250px;margin-top:60px">
+	        <div class="modal-content" style="width:900px">
+	          <div class="modal-header" >
+	            <h5 class="modal-title">modifier vos informations</h5>
+	            <button class="close" data-dismiss="modal">&times;</button>
+	          </div>
+	          <form th:action="@{/modifierProfileEntrepreneur}" th:object="${entrepreneur}" method="post">
+		          <div class="modal-body" >
+		          <div class="container">
+		          
+                 	<div class="row register-form">
+                      <div class="col-md-6">
+
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="nom *" th:field="*{nom}" />
+                          </div>
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="prenom *" th:field="*{prenom}" />
+                          </div>
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="nom Entreprise *" th:field="*{nomEntreprise}" />
+                          </div>
+                          <div class="form-group">
+                              <input type="password" class="form-control" placeholder="ancient mot de passe *"  name="ancientmdp"/>
+                          </div>
+                          <div class="form-group">
+                              <input type="password" class="form-control"  placeholder="nouveau mot de passe *" name="nouveaumdp" />
+                              <div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;" />
+                          </div>
+                          <div class="form-group">
+                              <textarea class="form-control" id="message" name="description" rows="3" placeholder="description" th:field="*{description}"></textarea>
+                          </div>
+                          
+                      </div>
+
+                      <div class="col-md-6">
+
+                        <!-- profile picture -->
+                        <div class="container" style="padding-left: 80px">
+                          <div id="profile-container">
+                             <image id="profileImage" src="imgs/entrepreneur2.jpg" />
+                          </div>
+                          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" th:field="*{photo}" capture>
+                          </div>
+                        <!-- end profile picture -->
+
+                          <div class="form-group mt-3">
+                              <input type="email" class="form-control" placeholder="Email *" th:field="*{email}" />
+                          </div>
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="adresse *" th:field="*{adresse}" />
+                          </div>
+                          <div class="form-group">
+                              <input type="text" minlength="1" maxlength="20" name="txtEmpPhone" class="form-control" placeholder="numero tel " th:field="*{phoneNmbr}" />
+                          </div>
+                          <div class="custom-file ">
+                              <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
+                              <label class="custom-file-label" for="myfile" >video presentative</label>
+                          </div>
+
+                         
+                      </div>
+                  	</div>
+                  </div>
+	          	</div>
+	          	<div class="modal-footer">
+	          	 	<button type="submit" class="btn btn-success" >modifier</button>
+	              <button class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	            </div>
+	          </form>
+	        </div>
+	      </div>
+		 </div>
+        <!-- MODAL end -->
 		    <div class="collapse mb-5" id="collapse-btn-a">
 		    
 		    	<div th:each="a,status:${annonces}">
@@ -337,11 +416,11 @@
 						                <h4 class="card-title pb-3" align="center" style="border-bottom:3px solid #bd9334;color:#bd9334;border-radius:15px ;">List des candidats</h4>
 							                <div th:each="e,status:${a.etudiantAnnonces}" >
 							                	<!-- MODAL TRIGGER -->
-							                	<button class="btn btn-outline-primary p-4 m-3" data-toggle="modal" data-target="#candidatModal" >
+							                	<button class="btn btn-outline-primary p-4 m-3" data-toggle="modal" th:data-target="'#candidatModal'+${status.index}" >
 							                		<spam th:text="${e.etudiant.nom}+' '+${e.etudiant.prenom}" />
 							                	</button>
 							                	<!-- MODAL -->
-							                	<div class="modal" id="candidatModal">
+							                	<div class="modal" th:id="'candidatModal'+${status.index}">
 											      <div class="modal-dialog">
 											        <div class="modal-content">
 											          <div class="modal-header">
