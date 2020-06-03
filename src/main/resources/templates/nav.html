@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <title>Accueil</title>
+  </head>
+
+  <body>
+  <div id="main" th:fragment="nav">
+    <nav id="mainnav" class="navbar navbar-expand-sm navbar-light bg-light bg-dark">
+      <div class="container" id="first">
+        <a class="navbar-brand" th:href="@{/index}"><img src="imgs/stage1.jpg"></a>
+        <button
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+          	<li class="nav-item" th:if="${isAuthenticated}">
+              <a class="nav-link" th:href="@{/profile}" sec:authentication:"name"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">publier annonce</a>
+            </li>
+            <li class="nav-item dropdown" th:if="${!isAuthenticated}">
+              <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                >se connecter</a
+              >
+              <ul id="login-dp" class="dropdown-menu">
+                <li>
+                  <div class="row">
+                    <div class="col-md-12">
+                      se connecter
+                      <div class="social-buttons">
+                        <a href="#" class="btn btn-fb"
+                          ><i class="fab fa-facebook-f"></i> Facebook</a
+                        >
+                        <a href="#" class="btn btn-tw"
+                          ><i class="fab fa-twitter"></i> Twitter</a
+                        >
+                      </div>
+                      ou
+                      <form class="form" role="form" th:action="@{/login}"  method="post" accept-charset="UTF-8" id="login-nav" >
+                        <div class="form-group">
+                          <label class="sr-only" for="exampleInputEmail2"
+                            >adresse email</label
+                          >
+                          <input
+                            type="email"
+                            name="username"
+                            class="form-control"
+                            id="exampleInputEmail2"
+                            placeholder="adresse email"
+                            required
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="sr-only" for="exampleInputPassword2"
+                            >mot de passe</label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            id="exampleInputPassword2"
+                            placeholder="mot de passe"
+                            required
+                          />
+                          <div class="help-block text-right">
+                            <a href="">vous avez Oubliez le mot de passe ?</a>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button
+                            type="submit"
+                            class="btn btn-primary btn-block"
+                          >
+                            connecter
+                          </button>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" /> rester connecter</label
+                          >
+                        </div>
+                      </form>
+                    </div>
+                    <div class="bottom text-center">
+                      Nouveau ici ? <a href="#" class=" text-primary">rejoignez nous</a>
+                    </div>
+                  </div>
+                </li>
+                
+              </ul>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/pageInscription}">s'inscrire</a>
+              </li>
+              <li class="nav-item">
+              	<a class="nav-link" th:href="@{/login}" th:if="${!isAuthenticated}"><i class="fas fa-sign-in-alt"></i></a>
+              </li>
+              <li class="nav-item" th:if="${isAuthenticated}"> 
+	            <button class="btn" data-toggle="modal" data-target="#logout"><i class="fas fa-sign-out-alt"></i></button>
+	
+				<div class="modal" id="logout" tabindex="-1" role="dialog" aria-hidden="true">
+				  <div class="modal-dialog modal-sm">
+				    <div class="modal-content">
+				      <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+				      <div class="modal-body"><i class="fa fa-question-circle"></i> vous etes sure de se deconnecter ?</div>
+				      <div class="modal-footer">
+				      	<form th:action="@{/logout}" method="post"> 
+				      		<button class="btn btn-outline-warning" type="submit" name="login-submit">
+								logout
+							</button>
+						</form>
+				    </div>
+				  </div>
+				 </div>
+				</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</div><!-- 
+<script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> -->
+  </body>
+</html>

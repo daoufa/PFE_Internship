@@ -1,0 +1,30 @@
+#main-header {
+  background-color: #bd9334;
+  border-radius: 5px;
+  font-weight: bold;
+  
+}
+#headerDiv {
+  padding: 0px;
+  z-index: 1;
+}
+#profile-icon {
+  width: 20px;
+  height: 20px;
+}
+#main-header a {
+  color: rgba(3, 3, 3, 0.712);
+  font-family: sans-serif;
+  border-left: 1px solid #e4d1a5;
+  border-right: 1px solid #bd9334;
+  width: 300;
+  color: #ccc;
+}
+#main-header a[id="day"] {
+  color: #71412C;
+}
+
+.aHover:hover {
+  color: #fff;
+  background-color:#555;
+}

@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -56,9 +57,27 @@ public class HomeController {
 //	private ProfileRepository profileRepository;
 	
 	
-	@GetMapping("/login")
-	public String login(Model model) {
-		return "test";
+//	@GetMapping("/login")
+//	public String loginGet(Model model) {
+//		return "login";
+//	}
+	
+//	@PostMapping("/login")
+//	public String loginPost(Model model) {
+//		return "login";
+//	}
+	
+	@GetMapping(value="/login")
+	public String homePage(Model model) {
+		boolean isAuthenticated = false;
+		model.addAttribute("isAuthenticated",isAuthenticated);
+ 		return "login";
+ 	}
+	
+	
+	@GetMapping("/logout")
+	public String logout(Model model) {
+		return "logout";
 	}
 	
 	
@@ -66,19 +85,21 @@ public class HomeController {
 	public RedirectView redirectIndex() {
 		return new RedirectView("/index");
 	}
-	/*
-	 * @AuthenticationPrincipal User user,
-	 * */
+	
+	
 	@GetMapping("/index")
 	public String index(Model model,
 			@RequestParam(name="page" , defaultValue="0") int page,
 			@RequestParam(name="motcle" , defaultValue="") String motcle,
 			@RequestParam(name="localite" , defaultValue="") String lieu
 			) {
+		boolean isAuthenticated = false;
 		List<Long> listannoncesId = new ArrayList<Long>();
 		boolean isEntrepreneur = false;
 		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
 		if(user!=null) {
+			isAuthenticated = true;
+			System.out.println(user.getUsername());
 			List<Role> roles = user.getRoles();
 			
 			Role entrepreneurRole = new Role();
@@ -108,6 +129,7 @@ public class HomeController {
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
 		model.addAttribute("listannoncesId",listannoncesId);
 		model.addAttribute("isEntrepreneur",isEntrepreneur);
+		model.addAttribute("isAuthenticated",isAuthenticated);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("motcle",motcle);
 		model.addAttribute("localite",lieu);
@@ -159,22 +181,25 @@ public class HomeController {
 	 * */
 	@GetMapping("/pageInscription")
 	public String pageInscription(Model model) {
+		boolean isAuthenticated = false;
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user!=null) {
+			isAuthenticated = true;
+		}
 		model.addAttribute("entrepreneur",new Entrepreneur());
 		model.addAttribute("etudiant",new Etudiant());
+		model.addAttribute("isAuthenticated",isAuthenticated);
 		return "inscription";
 	}
 	
 	
 	@PostMapping("/inscrireEntrepreneur")
-	public String inscrireEntrepreneur(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
+	public RedirectView inscrireEntrepreneur(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
 			@RequestParam(name="mdp") int mdp,
-			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
-			@RequestParam(name="page" , defaultValue="0") int page,
-			@RequestParam(name="motcle" , defaultValue="") String motcle,
-			@RequestParam(name="localite" , defaultValue="") String lieu) {
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation) {
 		if(mdp!=mdpConfirmation) {
 			model.addAttribute("errorMessage","confirmation invalide");
-			return "inscription";
+			return new RedirectView("/pageInscription");
 		}
 		e.setDateCreation(new Date());
 		entrepreneurRepository.save(e);
@@ -185,28 +210,18 @@ public class HomeController {
 		user.addRole(roleRepository.findByRole("ENTREPRENEUR"));
 		userRepository.save(user);
 		
-//		redirection vers index
-		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
-		model.addAttribute("annonces",annonces.getContent());
-		model.addAttribute("pages", new int[annonces.getTotalPages()]);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("motcle",motcle);
-		model.addAttribute("localite",lieu);
-		return "index";
+		return new RedirectView("/index");
 	}
 	
 	
 	
 	@PostMapping("/inscrireEtudiant")
-	public String inscrireEtudiant(Model model, @ModelAttribute("etudiant") Etudiant e,
+	public RedirectView inscrireEtudiant(Model model, @ModelAttribute("etudiant") Etudiant e,
 			@RequestParam(name="mdp") int mdp,
-			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
-			@RequestParam(name="page" , defaultValue="0") int page,
-			@RequestParam(name="motcle" , defaultValue="") String motcle,
-			@RequestParam(name="localite" , defaultValue="") String lieu) {
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation) {
 		if(mdp!=mdpConfirmation) {
 			model.addAttribute("errorMessage","confirmation invalide");
-			return "inscription";
+			return new RedirectView("/pageInscription");
 		}
 		e.setDateCreation(new Date());
 		etudiantRepository.save(e);
@@ -217,14 +232,7 @@ public class HomeController {
 		user.addRole(roleRepository.findByRole("ETUDIANT"));
 		userRepository.save(user);
 		
-//		redirection vers index
-		Page<Annonce> annonces=annonceRepository.searchIndexPage("%"+motcle+"%","%"+lieu+"%", PageRequest.of(page, 9));
-		model.addAttribute("annonces",annonces.getContent());
-		model.addAttribute("pages", new int[annonces.getTotalPages()]);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("motcle",motcle);
-		model.addAttribute("localite",lieu);
-		return "index";
+		return new RedirectView("/index");
 	}
 	
 	
@@ -302,8 +310,13 @@ public class HomeController {
 	
 	@GetMapping("/EntrepreneurProfile")
 	public String EntrepreneurProfile(Model model,@RequestParam(name="page" , defaultValue="0") int page) {
+		boolean isAuthenticated = false;
 		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
 		if(user==null) return "login";
+		else {
+			isAuthenticated = true;
+			System.out.println(user.getUsername());
+		}
 		System.out.println(httpServletRequest.getRemoteUser());
 		Entrepreneur entrepreneur = entrepreneurRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
 		model.addAttribute("entrepreneur",entrepreneur);
@@ -315,6 +328,7 @@ public class HomeController {
 		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 9));
 		model.addAttribute("annonces",annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("isAuthenticated",isAuthenticated);
 		model.addAttribute("currentPage", page);
 		
 		return "profile";
@@ -322,15 +336,19 @@ public class HomeController {
 	
 	@PostMapping("/modifierProfileEntrepreneur")
 	public String modifierProfileEntrepreneur(Model model, @ModelAttribute("entrepreneur") Entrepreneur e,
-			@RequestParam(name="ancientmdp") String ancientmdp,
-			@RequestParam(name="nouveaumdp") int nouveaumdp,
+			@RequestParam(name="nouveaumdp") String nouveaumdp,
 			@RequestParam(name="page" , defaultValue="0") int page,
 			@RequestParam(name="motcle" , defaultValue="") String motcle,
 			@RequestParam(name="localite" , defaultValue="") String lieu) {
+		boolean isAuthenticated = false;
+		System.out.println(e.getId());
 //		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
 //		
-//		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
-//		if(user==null) return "login";
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return "login";
+		else {
+			isAuthenticated = true;
+		}
 //		System.out.println(user.getPassword());
 //		String mdpA = user.getPassword();
 //		System.out.println(mdpA);
@@ -341,16 +359,10 @@ public class HomeController {
 //			user.addRole(roleRepository.findByRole("ENTREPRENEUR"));
 //			userRepository.save(user);
 //		}
-		
-		Entrepreneur entrepreneur = new Entrepreneur();
-		Optional<Entrepreneur> result = entrepreneurRepository.findById(e.getId());
-		if (result.isPresent()) {
-			entrepreneur = result.get();
-		}
-		
+		Entrepreneur entrepreneur = entrepreneurRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
 		entrepreneur.setAdresse(e.getAdresse());entrepreneur.setDescription(e.getDescription());entrepreneur.setEmail(e.getEmail());entrepreneur.setNom(e.getNom());
 		entrepreneur.setNomEntreprise(e.getNomEntreprise());entrepreneur.setPhoneNmbr(e.getPhoneNmbr());entrepreneur.setPrenom(e.getPrenom());entrepreneur.setPhoto(e.getPhoto());
-		entrepreneurRepository.save(entrepreneur);
+		entrepreneur = entrepreneurRepository.save(entrepreneur);
 		
 		
 		
@@ -363,6 +375,7 @@ public class HomeController {
 		Page<Annonce> annonces=annonceRepository.findByEntrepreneur(entrepreneur, PageRequest.of(page, 9));
 		model.addAttribute("annonces",annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
+		model.addAttribute("isAuthenticated",isAuthenticated);
 		model.addAttribute("currentPage", page);
 		
 		return "profile";

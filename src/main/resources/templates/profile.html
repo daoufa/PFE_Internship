@@ -22,122 +22,10 @@
   <link rel="stylesheet" href="css/profileStyle.css" />
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-    <div class="container p-0" >
-      <a class="navbar-brand" style="margin:0;padding: 0" href="#"><img src="imgs/stage1.jpg" ></a>
-      <button
-          class="navbar-toggler"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">publier annonce</a>
-            </li>
+  <div th:replace="nav"></div>
+<div th:replace="header"></div>
 
-            <li class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                >se connecter</a
-              >
-              <ul id="login-dp" class="dropdown-menu">
-                <li>
-                  <div class="row">
-                    <div class="col-md-12">
-                      se connecter
-                      <div class="social-buttons">
-                        <a href="#" class="btn btn-fb"
-                          ><i class="fa fa-facebook"></i> Facebook</a
-                        >
-                        <a href="#" class="btn btn-tw"
-                          ><i class="fa fa-twitter"></i> Twitter</a
-                        >
-                      </div>
-                      or
-                      <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav" >
-                        <div class="form-group">
-                          <label class="sr-only" for="exampleInputEmail2"
-                            >Email address</label
-                          >
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Email address"
-                            required
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label class="sr-only" for="exampleInputPassword2"
-                            >Password</label
-                          >
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="exampleInputPassword2"
-                            placeholder="Password"
-                            required
-                          />
-                          <div class="help-block text-right">
-                            <a href="">Forget the password ?</a>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <button
-                            type="submit"
-                            class="btn btn-primary btn-block"
-                          >
-                            Sign in
-                          </button>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" /> keep melogged-in</label
-                          >
-                        </div>
-                      </form>
-                    </div>
-                    <div class="bottom text-center">
-                      New here ? <a href="#"><b class=" text-primary">Join Us</b></a>
-                    </div>
-                  </div>
-                </li>
-                
-              </ul>
-              <li class="nav-item">
-                <a class="nav-link" id="inscrire" href="#">s'inscrire</a>
-              </li>
-            </li>
-          </ul>
-        </div>
-    </div>
-  </nav>
-
-    <div class="container sticky-top mt-3 mb-5" id="headerDiv">
-        <header id="main-header" >
-            <ul class="nav nav-fill nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link active text-white aHover"  href="/index">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link aHover" id="day" href="#">1 day 12 h</a> 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link aHover" href="#">decouvrir vos options</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link aHover" href="#"><span id="profile-icon" class="fas fa-user-circle fa-lg"></span></a>
-                </li>
-            </ul>
-      </header>
-    </div>
-
-    <div class="container" id="profile">
+    <div class="container" id="profile" >
     	
     	<!-- slider des annonces  -->
         <div class="d-flex justify-content-center " th:if="${sliderAnnonces.isEmpty()==false}">
@@ -237,14 +125,64 @@
           </div>
           <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
 	    </div>
-	    <div class="profileLine" >
+	    <div class="profileLine mb-5" >
     		<div class="card bg-dark text-white" style="margin: 20px;border-radius: 20px;">
                 <blockquote class="card-bodyquote" style="margin: 0px">
-                    <h4>&emsp; <span th:text="${entrepreneur.nom}"/>  <span th:text="${entrepreneur.prenom}"/></h4> 
+                    <h4>&emsp; <span th:text="${entrepreneur.nom}"/>  <span th:text="${entrepreneur.prenom}"/>&emsp;</h4> 
                 </blockquote>
             </div>
     	</div>
-    	<!-- <div class="profileLine"> -->
+    	
+    	<!-- table of informations -->
+    	
+    	<table class="table table-striped my-5 " id="table">
+            <tbody>
+                <tr>
+                    <td class="table-header">Email :</td>
+                    <td >
+                    	<div style="display: flex;justify-content: center;">
+                    		<span th:text="${entrepreneur.email}"/>
+                    	</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-header">numero de telephone :</td>
+                    <td >
+	                    <div style="display: flex;justify-content: center;">
+	                    	<span th:text="${entrepreneur.phoneNmbr}" />
+	                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-header">Adresse :</td>
+                    <td >
+	                    <div style="display: flex;justify-content: center;">
+	                    	<span th:text="${entrepreneur.adresse}"/>
+	                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-header">Entreprise :</td>
+                    <td >
+	                    <div style="display: flex;justify-content: center;">
+	                    	<span th:text="${entrepreneur.nomEntreprise}"/>
+	                    </div>
+                    </td>
+                </tr>
+                <!-- 
+                <tr>
+                    <td class="table-header">description :</td>
+                    <td >
+	                    <div  style="display: flex;justify-content: center;">
+	                    	<span th:text="${entrepreneur.description}"/>
+	                    </div>
+                    </td>
+                </tr>
+                 -->
+            </tbody>
+        </table>
+    	
+    	<!-- <div class="profileLine"> 
     		<div class="d-flex justify-content-around row-hl">
 		      <div class="p-4 item-hl" >
 		      	<div class="card mb-3 discInfo" >
@@ -278,13 +216,13 @@
 			      		<div class="card-header"><span th:text="${entrepreneur.nomEntreprise}"/> </div>
 					</div>
 				</div>
-		    </div>
-			<div class="card mb-3 discInfo" style="width: 100%">
+		    </div>-->
+			<div class="card my-5 discInfo" style="width: 100%">
 				<div class="card-header">description </div>
-	            <div class="card-body">
+	            <div class="card-body" >
 	                <p class="card-text"><span th:text="${entrepreneur.description}"/></p>
-            </div>
-        </div>
+          		</div>
+        	</div>
         
         <!-- <div class="d-flex justify-content-center " style=" height:450px">
         	<div id="videoPresentatif">
@@ -317,7 +255,7 @@
 	            <h5 class="modal-title">modifier vos informations</h5>
 	            <button class="close" data-dismiss="modal">&times;</button>
 	          </div>
-	          <form th:action="@{/modifierProfileEntrepreneur}" th:object="${entrepreneur}" method="post">
+	          <form th:action="@{/modifierProfileEntrepreneur}" th:object="${entrepreneur}" method="post" onSubmit="return confirm('vous etes sur d'envoyer les modifications ?');">
 		          <div class="modal-body" >
 		          <div class="container">
 		          
@@ -377,9 +315,31 @@
                   </div>
 	          	</div>
 	          	<div class="modal-footer">
-	          	 	<button type="submit" class="btn btn-success" >modifier</button>
-	              <button class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	          	 	<button type="submit" class="btn btn-success" data-toggle="modal" data-target="#modal-warning" >modifier</button>
+	                <button class="btn btn-secondary" data-dismiss="modal">Annuler</button>
 	            </div>
+	            <!-- 
+	            
+	            <div class="modal modal-warning fade in" id="myModal">
+				 <div class="modal-dialog">
+					 <div class="modal-content">
+						 <div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							 	<span aria-hidden="true">×</span></button>
+							 <h5 class="modal-title">Delete User</h5>
+						</div>
+						 <div class="modal-body">
+							 <h3>Are you sure want to delete this user?</h3>
+						 </div>
+						 <div class="modal-footer">
+							 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+							 <a type="button" class="btn btn-danger"><i class="fa fa-check"></i>&nbsp;Yes</a>
+						 </div>
+					 </div>
+				 </div>
+				</div>
+				
+				 -->
 	          </form>
 	        </div>
 	      </div>
@@ -470,27 +430,8 @@
 
     </div>
 
+<div th:replace="footer"></div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--  <script src="jquery/dist/jquery.min.js"></script>
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>-->
     
     
     <script
@@ -585,5 +526,15 @@
 		      $('#hello').popover('toggle');
 		    }
 	  </script>
+	  <script type = "text/javascript">
+            function getConfirmation() {
+               var retVal = confirm("vous etes sur d'envoyer les modifications ?");
+               if( retVal == true ) {
+                  return true;
+               } else {
+                  return false;
+               }
+            }
+      </script>     
 </body>
 </html>

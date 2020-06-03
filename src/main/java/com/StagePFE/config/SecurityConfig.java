@@ -45,7 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/postuler").hasRole("ETUDIANT")
 			.antMatchers("/profile").authenticated()
 			.antMatchers("/").permitAll()
-			.and().formLogin();//loginPage("/login")
+			.and().formLogin()
+			.loginPage("/login")
+			.loginProcessingUrl("/login")
+			.defaultSuccessUrl("/index")
+			.and().logout()
+			.logoutUrl("/logout").logoutSuccessUrl("/login");
 	}
 	
 	

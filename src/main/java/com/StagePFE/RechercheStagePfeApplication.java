@@ -65,7 +65,7 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 		Etudiant e4 = etudiantRepository.save(new Etudiant("b@outlook.fr", "daoufa", "abderrahman", new Date(),
 				"c:/photos", "c:/videos", "daoufa abderrahman", "Ait ourir", "0666545", null));
 		Entrepreneur p1 = entrepreneurRepository.save(new Entrepreneur("abdeer@outlook.fr", "daoufa", "abderrahman",
-				new Date(), "c:/photos", "E:/videos", "first entrepreneur", "marrakech","0654412", "SQLi"));
+				new Date(), "c:/photos", "E:/videos", "first entrepreneur daoufa abderrahman Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, inventore.", "marrakech","0654412", "SQLi"));
 		p1.setNomEntreprise("SQLi");
 		Entrepreneur p2 = entrepreneurRepository.save(new Entrepreneur("mosameh1@Gmail.com", "mosameh", "meryem",
 				new Date(), "c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "065234", "STG"));

@@ -20,104 +20,11 @@
       crossorigin="anonymous"
     />
   <!--<link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
-  <link rel="stylesheet" href="css/styleInscription.css" />
+  <link rel="stylesheet" href="css/inscription.css" />
 </head>
 <body>
-  <nav id="mainnav" class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-    <div class="container p-0" >
-      <a class="navbar-brand" style="margin:0;padding: 0" href="/index"><img src="imgs/stage1.jpg" ></a>
-      <button
-          class="navbar-toggler"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">publier annonce</a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                >se connecter</a
-              >
-              <ul id="login-dp" class="dropdown-menu">
-                <li>
-                  <div class="row">
-                    <div class="col-md-12">
-                      se connecter
-                      <div class="social-buttons">
-                        <a href="#" class="btn btn-fb"
-                          ><i class="fa fa-facebook"></i> Facebook</a
-                        >
-                        <a href="#" class="btn btn-tw"
-                          ><i class="fa fa-twitter"></i> Twitter</a
-                        >
-                      </div>
-                      or
-                      <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav" >
-                        <div class="form-group">
-                          <label class="sr-only" for="exampleInputEmail2"
-                            >Email address</label
-                          >
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Email address"
-                            required
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label class="sr-only" for="exampleInputPassword2"
-                            >Password</label
-                          >
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="exampleInputPassword2"
-                            placeholder="Password"
-                            required
-                          />
-                          <div class="help-block text-right">
-                            <a href="">Forget the password ?</a>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <button
-                            type="submit"
-                            class="btn btn-primary btn-block"
-                          >
-                            Sign in
-                          </button>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" /> keep melogged-in</label
-                          >
-                        </div>
-                      </form>
-                    </div>
-                    <div class="bottom text-center">
-                      New here ? <a href="#"><b class=" text-primary">Join Us</b></a>
-                    </div>
-                  </div>
-                </li>
-                
-              </ul>
-              <li class="nav-item">
-                <a class="nav-link" id="inscrire" th:href="@{/pageInscription}">s'inscrire</a>
-              </li>
-            </li>
-          </ul>
-        </div>
-    </div>
-  </nav>
+  <div th:replace="nav"></div>
+  
 <div class="container pt-3 mt-3 register">
 
 
@@ -143,7 +50,7 @@
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   <h3 class="register-heading" style="color:#fff;">s'inscrire comme Entrepreneur</h3>
                   
-                  <form th:action="@{/modifierProfileEntrepreneur}" th:object="${entrepreneur}" method="post">
+                  <form th:action="@{/inscrireEntrepreneur}" th:object="${entrepreneur}" method="post">
                   
                  	<div class="row register-form">
                       <div class="col-md-6">
