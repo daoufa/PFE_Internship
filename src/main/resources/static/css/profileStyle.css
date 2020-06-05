@@ -11,10 +11,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  /*padding-bottom: 300px;
-  min-height: 100vh;*/
   position: relative;
 }
+
 
 #profile{
 	margin-bottom:100px;
@@ -129,5 +128,24 @@ body {
 }
 
 
+/*
+#profile{
+	margin-bottom:100px;
+}
+input.form-control:focus {
+    box-shadow: none;
+}
 
+input.form-control::placeholder {
+    font-style: italic;
+}
 
+.input-group-text {
+    border-radius: 0 30rem 30rem 0;
+    border: none;
+}
+
+.datepicker-dropdown {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+*/
