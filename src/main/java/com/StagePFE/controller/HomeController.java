@@ -53,19 +53,7 @@ public class HomeController {
 	private RoleRepository roleRepository;
 	@Autowired
 	private HttpServletRequest httpServletRequest;
-//	@Autowired
-//	private ProfileRepository profileRepository;
-	
-	
-//	@GetMapping("/login")
-//	public String loginGet(Model model) {
-//		return "login";
-//	}
-	
-//	@PostMapping("/login")
-//	public String loginPost(Model model) {
-//		return "login";
-//	}
+
 	
 	@GetMapping(value="/login")
 	public String homePage(Model model) {
@@ -330,6 +318,9 @@ public class HomeController {
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
 		model.addAttribute("isAuthenticated",isAuthenticated);
 		model.addAttribute("currentPage", page);
+		Annonce a = new Annonce();
+		a.setTitre("Job");
+		model.addAttribute("nvAnnonce", a);
 		
 		return "profile";
 	}
@@ -379,6 +370,23 @@ public class HomeController {
 		model.addAttribute("currentPage", page);
 		
 		return "profile";
+	}
+	
+	@PostMapping("/publierAnnonce")
+	public RedirectView publierAnnonce(Model model,
+			@RequestParam(name="page" , defaultValue="0") int page,
+			@ModelAttribute("nvAnnonce") Annonce a) {
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return new RedirectView("/login");
+		Entrepreneur entrepreneur = entrepreneurRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
+		
+		Annonce annonce = new Annonce(null, entrepreneur, null, null, a.getTitre(), a.getDescription(), new Date(), null, true, a.getLieu());
+		if(a.getLieu()=="") {
+			annonce.setLieu(entrepreneur.getAdresse());
+		}
+		
+		annonceRepository.save(annonce);
+		return new RedirectView("/profile");
 	}
 }
 

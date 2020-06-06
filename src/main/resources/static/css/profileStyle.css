@@ -14,6 +14,27 @@ body {
   position: relative;
 }
 
+#publierAnnonce{
+	display: flex;
+	justify-content: center;
+	margin-bottom:50px;
+}
+
+.form-group-publierAnnonce-long{
+	padding-left:100px;
+	padding-right:100px;
+}
+.form-group-publierAnnonce-short{
+	padding-left:200px;
+	padding-right:200px;
+}
+
+.label-publierAnnonce{
+	display: flex;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 20px
+}
 
 #profile{
 	margin-bottom:100px;
@@ -128,7 +149,6 @@ body {
 }
 
 
-/*
 #profile{
 	margin-bottom:100px;
 }
@@ -148,4 +168,3 @@ input.form-control::placeholder {
 .datepicker-dropdown {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
-*/
