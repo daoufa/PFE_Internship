@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +28,9 @@ public class Profile implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dateCreation;
 	private String photo;
+	private String photoType;
+	@Lob
+	private byte[] photodata;
 	private String video;
 	private String description;
 	private String adresse;

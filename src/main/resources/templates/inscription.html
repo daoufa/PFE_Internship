@@ -33,7 +33,7 @@
 
           <img src="imgs/ballon.png" alt=""/>
           <h3><small style="color: red;">free</small><br> tours vers vos emplois de rêve</h3>
-          <input type="submit" name="" id="connecter" value="se connecter"/><br/>
+          <input type="submit" name="" id="connecter" value="se connecter"/><a th:href="@{/login}"></a><br/>
       </div>
       <div class="col-md-9 register-right">
           <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -50,7 +50,7 @@
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   <h3 class="register-heading" style="color:#fff;">s'inscrire comme Entrepreneur</h3>
                   
-                  <form th:action="@{/inscrireEntrepreneur}" th:object="${entrepreneur}" method="post">
+                  <form th:action="@{/inscrireEntrepreneur}" th:object="${nvEntrepreneur}" method="post" encType="multipart/form-data">
                   
                  	<div class="row register-form">
                       <div class="col-md-6">
@@ -84,7 +84,7 @@
                           <div id="profile-container">
                              <image id="profileImage" src="imgs/entrepreneur2.jpg" />
                           </div>
-                          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" th:field="*{photo}" capture>
+                          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
                           </div>
                         <!-- end profile picture -->
 
@@ -97,11 +97,12 @@
                           <div class="form-group">
                               <input type="text" minlength="1" maxlength="20" name="txtEmpPhone" class="form-control" placeholder="numero tel " th:field="*{phoneNmbr}" />
                           </div>
+                          <!-- 
                           <div class="custom-file ">
                               <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
                               <label class="custom-file-label" for="myfile" >video presentative</label>
                           </div>
-
+ -->
                           <input type="submit" class="btnRegister"  value="s'inscrire"/>
                       </div>
                   	</div>
@@ -111,7 +112,7 @@
               <!-- etudiant -->
               <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                   <h3 class="register-heading" style="color:#fff;">s'inscrire comme Etudiant</h3>
-				  <form th:action="@{/inscrireEtudiant}" th:object="${etudiant}" method="post">
+				  <form th:action="@{/inscrireEtudiant}" th:object="${nvEtudiant}" method="post">
 	                  <div class="row register-form">
 	                      <div class="col-md-6">
 	

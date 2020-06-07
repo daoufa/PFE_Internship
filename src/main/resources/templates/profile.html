@@ -165,12 +165,15 @@
           <div class="d-flex justify-content-end row-hl" id="scrollspy">
           	<a class="pb-4 item-hl " style="padding-right:100px" href="#publications">voir plus <i class="fas fa-arrow-alt-circle-right"></i></a>
           </div>
+          <!-- <a th:href="@{'/profile/downloadFile/'+${entrepreneur.id}}">Download</a> -->
 		<!-- lists des annoces -->
     	
     	
     	<div class="container" id="profilePic">
           <div id="profile-container">
-             <image id="profileImage" src="imgs/entrepreneur2.jpg" />
+          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id}" />
+          	<!-- 
+             <image id="profileImage" src="imgs/entrepreneur2.jpg" /> -->
           </div>
           <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
 	    </div>
@@ -304,7 +307,7 @@
 	            <h5 class="modal-title">modifier vos informations</h5>
 	            <button class="close" data-dismiss="modal">&times;</button>
 	          </div>
-	          <form th:action="@{/modifierProfileEntrepreneur}" th:object="${entrepreneur}" method="post" onSubmit="return confirm('vous etes sur d'envoyer les modifications ?');">
+	          <form th:action="@{/modifierProfileEntrepreneur}" th:object="${entrepreneur}" method="post" encType="multipart/form-data" onSubmit="return confirm('vous etes sur d'envoyer les modifications ?');">
 		          <div class="modal-body" >
 		          <div class="container">
 		          
@@ -338,9 +341,10 @@
                         <!-- profile picture -->
                         <div class="container" style="padding-left: 80px">
                           <div id="profile-container">
-                             <image id="profileImage" src="imgs/entrepreneur2.jpg" />
+                          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id}" />
+                             <!-- <image id="profileImage" src="imgs/entrepreneur2.jpg" /> -->
                           </div>
-                          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" th:field="*{photo}" capture>
+                          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
                           </div>
                         <!-- end profile picture -->
 
@@ -353,11 +357,12 @@
                           <div class="form-group">
                               <input type="text" minlength="1" maxlength="20" name="txtEmpPhone" class="form-control" placeholder="numero tel " th:field="*{phoneNmbr}" />
                           </div>
+                          <!-- 
                           <div class="custom-file ">
                               <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
                               <label class="custom-file-label" for="myfile" >video presentative</label>
                           </div>
-
+                           -->
                          
                       </div>
                   	</div>

@@ -23,7 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
           	<li class="nav-item" th:if="${isAuthenticated}">
-              <a class="nav-link" th:href="@{/profile}" sec:authentication:"name"></a>
+		          	<a class="nav-link" th:href="@{/profile}" th:if="${isEntrepreneur}" Style="border:1px solid red"> &emsp; <span th:text="${entrepreneur.nom}"/> <span th:text="${entrepreneur.prenom}"/>&emsp;</spam></a>
+		         <div id="profile-container-nav" th:if="${!isEntrepreneur}">
+		          	<a class="nav-link" th:href="@{/profile}"> &emsp; <span th:text="${etudiant.nom}"/>  <span th:text="${etudiant.prenom}"/>&emsp; </a>
+		         </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">publier annonce</a>
@@ -124,6 +127,15 @@
 				    </div>
 				  </div>
 				 </div>
+				</li>
+				
+				<li class="nav-item" th:if="${isAuthenticated}" Style="border:1px solid red"> 
+	            	<div id="profile-container-nav" th:if="${isEntrepreneur}" Style="border:1px solid red">
+			          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id}" />
+			        </div>
+			         <div id="profile-container-nav" th:if="${!isEntrepreneur}">
+			          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${etudiant.id}" />
+			         </div>
 				</li>
           </ul>
         </div>

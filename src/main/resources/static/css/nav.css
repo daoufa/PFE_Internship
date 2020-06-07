@@ -86,3 +86,19 @@
     border-top: 0 none;
   }
 }
+
+#profile-container-nav {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+#profile-container-nav img {
+    width: 30px;
+    height: 30px;
+}
