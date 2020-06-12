@@ -168,15 +168,19 @@
           <!-- <a th:href="@{'/profile/downloadFile/'+${entrepreneur.id}}">Download</a> -->
 		<!-- lists des annoces -->
     	
-    	
-    	<div class="container" id="profilePic">
-          <div id="profile-container">
-          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
-          	<!-- 
-             <image id="profileImage" src="imgs/entrepreneur2.jpg" /> -->
-          </div>
-          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
-	    </div>
+    	<form th:action="@{/photoEntrepreneur}" method="post" encType="multipart/form-data">
+    		<div class="profileLine" >
+		    	<button class="cta" id="sub-pic" type="submit"><i class="fas fa-edit"></i></button>
+		    </div>
+	    	<div class="container" id="profilePic">
+	          <div id="profile-container">
+	          	<img id="profileImage" alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
+	          	<!-- 
+	             <image id="profileImage" src="imgs/entrepreneur2.jpg" /> -->
+	          </div>
+	          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
+		    </div>
+		</form>
 	    <div class="profileLine mb-5" >
     		<div class="card bg-dark text-white" style="margin: 20px;border-radius: 20px;">
                 <blockquote class="card-bodyquote" style="margin: 0px">

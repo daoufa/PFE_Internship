@@ -70,6 +70,23 @@ body {
     height: 150px;
 }
 
+#sub-pic{
+  margin-left: 40px;
+  margin-top:9px;
+  margin-bottom:9px;
+  padding: 2px 18px;
+  background-color: rgba(0, 136, 169, 1);
+  border: 1px dashed #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s;
+  color:#fff;
+}
+
+#sub-pic:hover {
+  background-color: rgba(0, 136, 169, 0.8);
+}
+
 .profileLine{
 	/*border:2px solid red;*/
 	width: 100%;

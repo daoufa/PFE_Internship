@@ -29,12 +29,15 @@
       	<div class="shape">
 	        <div class="customer__picture">
 	        	<h3 id="nameEtudiant">&emsp; <span th:text="${etudiant.nom}"/>  <span th:text="${etudiant.prenom}"/>&emsp;</h3>
-	          	<div id="profilePic" >
-		          <div id="profile-container" >
-	              <img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${etudiant.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
-		          </div>
-		          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
-			    </div>
+	        	<form th:action="@{/photoEtudiant}" method="post" encType="multipart/form-data">
+		          	<div id="profilePic" >
+			          <div id="profile-container" >
+		              <img id="profileImage" alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${etudiant.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
+			          </div>
+			          <input id="imageUpload" type="file" th:name="profile_photo" placeholder="Photo" capture style="border:2px solid red">
+			          <input class="cta" id="sub-pic" type="submit" value="enregistrer">
+				    </div>
+			    </form>
 	        </div>
 	        <div class="text">
 	          <div class="card">

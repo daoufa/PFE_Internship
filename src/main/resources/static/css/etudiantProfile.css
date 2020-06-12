@@ -22,7 +22,7 @@ body {
 
 .shape__container {
   position: relative;
-  height: 950px;
+  height: 980px;
   width: 400px;
   margin-left:300px;
   margin-top:100px;
@@ -34,7 +34,7 @@ body {
   flex-direction: column;
   background: #4787c9;
   width: 700px;
-  height: 950px;
+  height: 980px;
   border-radius: 30px;
   margin-bottom: 50px;
   -webkit-box-shadow: 2px 0px 12px 1px rgba(217,214,217,0.74);
@@ -53,7 +53,7 @@ body {
   padding-left: 50px;
   margin-top: 10%;
   height: 50px;
-  width:330px;
+  width:430px;
   color: white;
 }
 
@@ -70,8 +70,8 @@ body {
 }
 
 #profilePic{
-  display: flex;
-  justify-content: center;
+  /*display: flex;
+  justify-content: center;*/
   padding-top: 20px;
   margin-left:25%;
   margin-top:5%;
@@ -99,6 +99,23 @@ body {
 #profile-container img {
   width: 150px;
   height: 150px;
+}
+
+#sub-pic{
+  margin-left: 40px;
+  margin-top:9px;
+  margin-bottom:9px;
+  padding: 2px 18px;
+  background-color: rgba(0, 136, 169, 1);
+  border: 1px dashed #fb3333;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s;
+  color:#fff;
+}
+
+#sub-pic:hover {
+  background-color: rgba(0, 136, 169, 0.8);
 }
 
 .card{

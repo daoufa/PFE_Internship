@@ -243,7 +243,7 @@ public class HomeController {
 			return new RedirectView("/pageInscription");
 		}
 		if(file.getSize()==0) {
-			e.setPhotoType("image/jpeg");
+			e.setPhotoType("image/jpg");
 			e.setPhotodata(Files.readAllBytes(Paths.get("src/main/resources/static/imgs/entrepreneur2.jpg")));
 		}else {
 			e.setPhotoType(file.getContentType());
@@ -306,18 +306,18 @@ public class HomeController {
 	public RedirectView inscrireEtudiant(Model model, @ModelAttribute("etudiant") Etudiant e,
 			@RequestParam(name="mdp") int mdp,
 			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
-			@RequestParam("profile_photo") MultipartFile file,
+			@RequestParam("profile_photo") MultipartFile photo,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if(mdp!=mdpConfirmation) {
 			model.addAttribute("errorMessage","confirmation invalide");
 			return new RedirectView("/pageInscription");
 		}
-		if(file.getSize()==0) {
-			e.setPhotoType("image/jpeg");
+		if(photo.getSize()==0) {
+			e.setPhotoType("image/png");
 			e.setPhotodata(Files.readAllBytes(Paths.get("src/main/resources/static/imgs/etudiant2.png")));
 		}else {
-			e.setPhotoType(file.getContentType());
-			e.setPhotodata(file.getBytes());
+			e.setPhotoType(photo.getContentType());
+			e.setPhotodata(photo.getBytes());
 		}
 		e.setDateCreation(new Date());
 		e = etudiantRepository.save(e);
@@ -479,6 +479,27 @@ public class HomeController {
 		return new RedirectView("/profile");
 	}
 	
+	@PostMapping("/photoEntrepreneur")
+	public RedirectView photoEntrepreneur(Model model,
+			@RequestParam("profile_photo") MultipartFile photo) throws IOException {
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return new RedirectView("/login");
+		Entrepreneur entrepreneur = entrepreneurRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
+		
+		if(photo.getSize()==0) {
+			entrepreneur.setPhotoType("image/jpg");
+			entrepreneur.setPhotodata(Files.readAllBytes(Paths.get("src/main/resources/static/imgs/entrepreneur2.jpg")));
+		}else {
+			entrepreneur.setPhotoType(photo.getContentType());
+			entrepreneur.setPhotodata(photo.getBytes());
+		}
+		entrepreneur.setPhoto("PHOTO-ENTREPRENEUR-ID"+entrepreneur.getId());
+		
+		entrepreneur = entrepreneurRepository.save(entrepreneur);
+		
+		return new RedirectView("/profile");
+	}
+	
 	@PostMapping("/publierAnnonce")
 	public RedirectView publierAnnonce(Model model,
 			@RequestParam(name="page" , defaultValue="0") int page,
@@ -537,6 +558,27 @@ public class HomeController {
 			userRepository.save(user);
 			return new RedirectView("/login");
 		}
+		
+		return new RedirectView("/profile");
+	}
+	
+	@PostMapping("/photoEtudiant")
+	public RedirectView photoEtudiant(Model model,
+			@RequestParam("profile_photo") MultipartFile photo) throws IOException {
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return new RedirectView("/login");
+		Etudiant etudiant = etudiantRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
+		
+		if(photo.getSize()==0) {
+			etudiant.setPhotoType("image/png");
+			etudiant.setPhotodata(Files.readAllBytes(Paths.get("src/main/resources/static/imgs/etudiant2.png")));
+		}else {
+			etudiant.setPhotoType(photo.getContentType());
+			etudiant.setPhotodata(photo.getBytes());
+		}
+		etudiant.setPhoto("PHOTO-ETUDIANT-ID"+etudiant.getId());
+		
+		etudiant = etudiantRepository.save(etudiant);
 		
 		return new RedirectView("/profile");
 	}
