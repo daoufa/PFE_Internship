@@ -10,7 +10,7 @@
 
   <body>
   <div id="main" th:fragment="nav">
-    <nav id="mainnav" class="navbar navbar-expand-sm navbar-light bg-light bg-dark">
+    <nav id="mainnav" class="navbar navbar-expand-sm navbar-light  " style="background-color:#080C15">
       <div class="container" id="first">
         <a class="navbar-brand" th:href="@{/index}"><img src="imgs/stage1.jpg"></a>
         <button
@@ -23,10 +23,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
           	<li class="nav-item" th:if="${isAuthenticated}">
-		          	<a class="nav-link" th:href="@{/profile}" th:if="${isEntrepreneur}" Style="border:1px solid red"> &emsp; <span th:text="${entrepreneur.nom}"/> <span th:text="${entrepreneur.prenom}"/>&emsp;</spam></a>
-		         <div id="profile-container-nav" th:if="${!isEntrepreneur}">
-		          	<a class="nav-link" th:href="@{/profile}"> &emsp; <span th:text="${etudiant.nom}"/>  <span th:text="${etudiant.prenom}"/>&emsp; </a>
-		         </div>
+		          	<a class="nav-link" th:href="@{/profile}" th:if="${isEntrepreneur}" Style="color:#06c9ff"> &emsp; <span th:text="${entrepreneur.nom}"/> <span th:text="${entrepreneur.prenom}"/>&emsp;</a>
+		          	<a class="nav-link" th:href="@{/profile}" th:if="${!isEntrepreneur}" Style="color:#06c9ff"> &emsp; <span th:text="${etudiant.nom}"/>  <span th:text="${etudiant.prenom}"/>&emsp; </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">publier annonce</a>
@@ -110,8 +108,22 @@
               <li class="nav-item">
               	<a class="nav-link" th:href="@{/login}" th:if="${!isAuthenticated}"><i class="fas fa-sign-in-alt"></i></a>
               </li>
+              
+              <li class="nav-item" th:if="${isAuthenticated}" Style="display: flex;justify-content: center;"> 
+					<a th:href="@{/profile}" >
+		            	<div id="profile-container-nav" th:if="${isEntrepreneur}" Style="display: flex;justify-content: center;margin:6px">
+				          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
+				        </div>
+				         <div id="profile-container-nav" th:if="${!isEntrepreneur}" Style="display: flex;justify-content: center;margin:6px">
+				          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${etudiant.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
+				         </div>
+			         </a>
+			         
+				</li>
+				
+				
               <li class="nav-item" th:if="${isAuthenticated}"> 
-	            <button class="btn" data-toggle="modal" data-target="#logout"><i class="fas fa-sign-out-alt"></i></button>
+	            <button class="btn" data-toggle="modal" data-target="#logout">logout <i class="fas fa-sign-out-alt"></i></button>
 	
 				<div class="modal" id="logout" tabindex="-1" role="dialog" aria-hidden="true">
 				  <div class="modal-dialog modal-sm">
@@ -129,14 +141,6 @@
 				 </div>
 				</li>
 				
-				<li class="nav-item" th:if="${isAuthenticated}" Style="border:1px solid red"> 
-	            	<div id="profile-container-nav" th:if="${isEntrepreneur}" Style="border:1px solid red">
-			          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id}" />
-			        </div>
-			         <div id="profile-container-nav" th:if="${!isEntrepreneur}">
-			          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${etudiant.id}" />
-			         </div>
-				</li>
           </ul>
         </div>
       </div>

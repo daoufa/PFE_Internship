@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css?family=Hind:300&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: white;
+  /*background: url(../imgs/black_white.jpg);*/
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(187,187,187,1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.shape__container {
+  position: relative;
+  height: 950px;
+  width: 400px;
+  margin-left:300px;
+  margin-top:100px;
+}
+
+.shape {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #4787c9;
+  width: 700px;
+  height: 950px;
+  border-radius: 30px;
+  margin-bottom: 50px;
+  -webkit-box-shadow: 2px 0px 12px 1px rgba(217,214,217,0.74);
+  -moz-box-shadow: 2px 0px 12px 1px rgba(217,214,217,0.74);
+  box-shadow: 2px 0px 12px 1px rgba(217,214,217,0.74);
+}
+
+.customer__picture {
+  background-color:#303032;
+  margin-top: 40px;
+  display: flex;
+  transform: skewX(-5deg) skewY(-5deg) scale(1.15);
+}
+
+#nameEtudiant{
+  padding-left: 50px;
+  margin-top: 10%;
+  height: 50px;
+  width:330px;
+  color: white;
+}
+
+.text {
+  font-family: "Hind", sans-serif;
+  font-size: 18px;
+  width: auto;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  padding: 40px 30px;
+  margin-bottom: 10px;
+  max-height: 25px;
+}
+
+#profilePic{
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  margin-left:25%;
+  margin-top:5%;
+}
+
+#imageUpload{
+  display: none;
+}
+
+#profileImage{
+  cursor: pointer;
+}
+
+#profile-container {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+   transform: skewX(5deg) skewY(5deg) ;
+}
+
+#profile-container img {
+  width: 150px;
+  height: 150px;
+}
+
+.card{
+  margin-top: 20px;
+  width: 100%;
+  -webkit-box-shadow: 2px 0px 12px 4px rgba(59,58,59,1);
+  -moz-box-shadow: 2px 0px 12px 4px rgba(59,58,59,1);
+  box-shadow: 2px 0px 12px 4px rgba(59,58,59,1);
+}
+
+.card li {
+  background-color: rgba(50,50,50,0.3);
+  display: flex;
+  
+}
+.card h3 {
+  min-width: 200px;
+  font-size: 20px;
+}
+
+.card span[id="description"] {
+  height: 200px;
+  overflow: auto;
+}
+
+#links a {
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  font-size:19px;
+  margin-left: 20px;
+  margin-right: 20px;
+  transition: color 0.3s ease 0s;
+}
+
+#links a:hover {
+  color: #00a;
+
+}
+
+.cta {
+  padding: 9px 25px;
+  background-color: rgba(0, 136, 169, 1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s;
+}
+
+.cta:hover {
+  background-color: rgba(0, 136, 169, 0.8);
+}
+
+#links{
+  margin-top: 550px;
+}
+
+.nav-cont{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  min-height: 500px;
+  background-color: #24252a;
+  color: white;
+  font-family: "Hind", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  -webkit-box-shadow: 2px 0px 12px 3px rgba(0,0,0,1);
+  -moz-box-shadow: 2px 0px 12px 3px rgba(0,0,0,1);
+  box-shadow: 2px 0px 12px 3px rgba(0,0,0,1);
+}
+
+#myTabContent{
+  padding:40px;
+}
+
+.form-group input {
+  background-color: rgba(50,50,50,0.8);
+  color:#fff;
+}
+
+.custom-file label{
+  background-color: rgba(50,50,50,0.8);
+}
+
+#message{
+   background-color: rgba(50,50,50,0.8);
+   color:#fff;
+}
+
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+
+blockquote{
+  color: #000;
+}

@@ -112,7 +112,7 @@
               <!-- etudiant -->
               <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                   <h3 class="register-heading" style="color:#fff;">s'inscrire comme Etudiant</h3>
-				  <form th:action="@{/inscrireEtudiant}" th:object="${nvEtudiant}" method="post">
+				  <form th:action="@{/inscrireEtudiant}" th:object="${nvEtudiant}" method="post" encType="multipart/form-data">
 	                  <div class="row register-form">
 	                      <div class="col-md-6">
 	
@@ -153,7 +153,7 @@
 	                          <div class="form-group">
 	                              <input type="text" class="form-control" placeholder="adresse *" th:field="*{adresse}" />
 	                          </div>
-	                          
+	                          <!-- 
 	                          <div class="custom-file mb-3">
 	                              <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
 	                              <label class="custom-file-label" for="myfile">video presentative</label>
@@ -162,7 +162,7 @@
 	                              <input type="file" id="myfile" class="custom-file-input" th:field="*{cv}">
 	                              <label class="custom-file-label" for="myfile">CV</label>
 	                          </div>
-	
+	 -->
 	                          <input type="submit" class="btnRegister"  value="s'inscrire"/>
 	                      </div>
 	                  </div>

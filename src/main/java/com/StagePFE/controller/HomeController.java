@@ -20,8 +20,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +41,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.dao.EntrepreneurRepository;
+import com.StagePFE.dao.EtudiantAnnonceRepository;
 import com.StagePFE.dao.EtudiantRepository;
 import com.StagePFE.dao.ProfileRepository;
 import com.StagePFE.dao.RoleRepository;
@@ -67,8 +71,8 @@ public class HomeController {
 	private RoleRepository roleRepository;
 	@Autowired
 	private HttpServletRequest httpServletRequest;
-//	@Autowired
-//	FileStorageService fileStorageService;
+	@Autowired
+	private EtudiantAnnonceRepository etudiantAnnonceRepository;
 	
 	@GetMapping(value="/login")
 	public String homePage(Model model) {
@@ -232,7 +236,8 @@ public class HomeController {
 			@ModelAttribute("entrepreneur") Entrepreneur e,
 			@RequestParam("profile_photo") MultipartFile file,
 			@RequestParam(name="mdp") int mdp,
-			@RequestParam(name="mdpConfirmation") int mdpConfirmation) throws IOException {
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if(mdp!=mdpConfirmation) {
 			model.addAttribute("errorMessage","confirmation invalide");
 			return new RedirectView("/pageInscription");
@@ -259,20 +264,32 @@ public class HomeController {
 		User user=new User();
 		user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(mdp)));user.setActive(true);
 		user.addRole(roleRepository.findByRole("ENTREPRENEUR"));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
 		userRepository.save(user);
 		
 		return new RedirectView("/index");
 	}
 	
 	@GetMapping("/profile/imageDisplay")
-	  public void showImage(@RequestParam("id") Long entrepreneurId, HttpServletResponse response,HttpServletRequest request) 
+	  public void showImage(@RequestParam("id") Long profileId,
+			  @RequestParam("isEntrepreneur") boolean isEntrepreneur,
+			  HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException{
-
-	    Entrepreneur entrepreneur = entrepreneurRepository.findById(entrepreneurId).get();
-	    System.out.println(entrepreneur.getPhotodata());
-	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-	    response.getOutputStream().write(entrepreneur.getPhotodata());
-	    response.getOutputStream().close();
+		if(isEntrepreneur) {
+			Entrepreneur entrepreneur = entrepreneurRepository.findById(profileId).get();
+		    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+		    response.getOutputStream().write(entrepreneur.getPhotodata());
+		    response.getOutputStream().close();
+		}else {
+			Etudiant etudiant = etudiantRepository.findById(profileId).get();
+		    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+		    response.getOutputStream().write(etudiant.getPhotodata());
+		    response.getOutputStream().close();
+		}
+	    
 	}
 	
 	@GetMapping("/profile/downloadFile/{fileId}")
@@ -288,18 +305,33 @@ public class HomeController {
 	@PostMapping("/inscrireEtudiant")
 	public RedirectView inscrireEtudiant(Model model, @ModelAttribute("etudiant") Etudiant e,
 			@RequestParam(name="mdp") int mdp,
-			@RequestParam(name="mdpConfirmation") int mdpConfirmation) {
+			@RequestParam(name="mdpConfirmation") int mdpConfirmation,
+			@RequestParam("profile_photo") MultipartFile file,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if(mdp!=mdpConfirmation) {
 			model.addAttribute("errorMessage","confirmation invalide");
 			return new RedirectView("/pageInscription");
 		}
+		if(file.getSize()==0) {
+			e.setPhotoType("image/jpeg");
+			e.setPhotodata(Files.readAllBytes(Paths.get("src/main/resources/static/imgs/etudiant2.png")));
+		}else {
+			e.setPhotoType(file.getContentType());
+			e.setPhotodata(file.getBytes());
+		}
 		e.setDateCreation(new Date());
-		etudiantRepository.save(e);
+		e = etudiantRepository.save(e);
+		e.setPhoto("PHOTO-ETUDIANT-ID"+e.getId());
+		e = etudiantRepository.save(e);
 		
 		BCryptPasswordEncoder bcp=new BCryptPasswordEncoder();
 		User user=new User();
 		user.setUsername(e.getEmail());user.setPassword(bcp.encode(Integer.toString(mdp)));user.setActive(true);
 		user.addRole(roleRepository.findByRole("ETUDIANT"));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
 		userRepository.save(user);
 		
 		return new RedirectView("/index");
@@ -362,23 +394,22 @@ public class HomeController {
 	public RedirectView redirectProfile() {
 		
 		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
-		if(user==null)new RedirectView("/login");
-		
+		if(user==null)return new RedirectView("/login");
 		List<Role> roles = user.getRoles();
 		Role entrepreneurRole = new Role();
 		entrepreneurRole.setRole("ENTREPRENEUR");
 		
 		if(roles.contains(entrepreneurRole)) {
 			
-			return new RedirectView("/EntrepreneurProfile");
+			return new RedirectView("/entrepreneurProfile");
 			
 		}else {
-			return new RedirectView("/EtudiantProfile");
+			return new RedirectView("/etudiantProfile");
 		}
 		
 	}
 	
-	@GetMapping("/EntrepreneurProfile")
+	@GetMapping("/entrepreneurProfile")
 	public String EntrepreneurProfile(Model model,@RequestParam(name="page" , defaultValue="0") int page) {
 		boolean isAuthenticated = false;
 		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
@@ -462,6 +493,51 @@ public class HomeController {
 		}
 		
 		annonceRepository.save(annonce);
+		return new RedirectView("/profile");
+	}
+	
+	@GetMapping("/etudiantProfile")
+	public String etudiantProfile(Model model,
+			@RequestParam(name="page",defaultValue="0") int page
+	) {
+		boolean isAuthenticated = false;
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return "login";
+		else {
+			isAuthenticated = true;
+		}
+		
+		Etudiant etudiant = etudiantRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
+		Page<EtudiantAnnonce> etudiantAnnonces = etudiantAnnonceRepository.findByEtudiant(etudiant, PageRequest.of(page, 6));
+		
+		model.addAttribute("etudiantAnnonces", etudiantAnnonces.getContent());
+		model.addAttribute("etudiant",etudiant);
+		model.addAttribute("isAuthenticated",isAuthenticated);
+		model.addAttribute("isEntrepreneur",false);
+		return "etudiantProfile";
+	}
+	
+	@PostMapping("/modifierProfileEtudiant")
+	public RedirectView modifierProfileEtudiant(Model model,
+			@ModelAttribute("etudiant") Etudiant e,
+//			@RequestParam("profile_photo") MultipartFile file,
+			@RequestParam(name="nouveaumdp") String nouveaumdp) throws IOException {
+		User user = userRepository.findByUsername(httpServletRequest.getRemoteUser());
+		if(user==null) return new RedirectView("/login");
+		Etudiant etudiant = etudiantRepository.findByEmail(httpServletRequest.getRemoteUser()).get(0);
+		etudiant.setAdresse(e.getAdresse());etudiant.setDescription(e.getDescription());etudiant.setEmail(e.getEmail());
+		etudiant.setNom(e.getNom());etudiant.setPhoneNmbr(e.getPhoneNmbr());
+		etudiant.setPrenom(e.getPrenom());//etudiant.setPhoto(e.getPhoto());
+		etudiant = etudiantRepository.save(etudiant);
+		
+		if(!user.getUsername().equals(e.getEmail()) ) {
+			user.setUsername(e.getEmail());
+			System.out.println(user.getUsername());
+			System.out.println(e.getEmail());
+			userRepository.save(user);
+			return new RedirectView("/login");
+		}
+		
 		return new RedirectView("/profile");
 	}
 }

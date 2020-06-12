@@ -171,7 +171,7 @@
     	
     	<div class="container" id="profilePic">
           <div id="profile-container">
-          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id}" />
+          	<img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${entrepreneur.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
           	<!-- 
              <image id="profileImage" src="imgs/entrepreneur2.jpg" /> -->
           </div>

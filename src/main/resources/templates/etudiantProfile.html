@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>inscrition</title>
+	
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+      crossorigin="anonymous"
+    />
+  <link rel="stylesheet" href="css/etudiantProfile.css" />
+</head>
+<body>
+	<div th:replace="nav"></div>
+	<div th:replace="header"></div>
+
+    <div class="shape__container">
+      	<div class="shape">
+	        <div class="customer__picture">
+	        	<h3 id="nameEtudiant">&emsp; <span th:text="${etudiant.nom}"/>  <span th:text="${etudiant.prenom}"/>&emsp;</h3>
+	          	<div id="profilePic" >
+		          <div id="profile-container" >
+	              <img alt="profile-photo" th:src="'/profile/imageDisplay?id='+ ${etudiant.id} + '&isEntrepreneur=' + ${isEntrepreneur}" />
+		          </div>
+		          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
+			    </div>
+	        </div>
+	        <div class="text">
+	          <div class="card">
+				  <ul class="list-group list-group-flush" >
+				    <li class="list-group-item" ><h3>nom :</h3> <span th:text="${etudiant.nom}"/></li>
+				    <li class="list-group-item" ><h3>prenom :</h3> <span th:text="${etudiant.prenom}"/></li>
+				    <li class="list-group-item" ><h3>email :</h3> <span th:text="${etudiant.email}"/></li>
+				    <li class="list-group-item" ><h3>adresse :</h3> <span th:text="${etudiant.adresse}"/></li>
+				    <li class="list-group-item" ><h3>N° Tel :</h3> <span th:text="${etudiant.phoneNmbr}" /></li>
+				    <li class="list-group-item" ><h3>description :</h3> <span id="description" th:text="${etudiant.description}" /></li>
+				  </ul>
+			   </div>
+	    	</div>
+			<div id="links" class="d-flex justify-content-between">
+			    <a class="cta" href="#">download cv</a>
+		    </div>
+    	</div>
+	</div>
+
+
+	<div class="container nav-cont">
+	    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+		  <li class="nav-item">
+		    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mes infos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Candidatures</a>
+		  </li>
+		</ul>
+		<div class="tab-content mb-5" id="myTabContent">
+		  	<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			  	<div class="tab-pane fade show" role="tabpanel" aria-labelledby="profile-tab">
+	                <h3 class="register-heading" style="color:#fff;">modifier mes informations</h3>
+		            <form th:action="@{/modifierProfileEtudiant}" th:object="${etudiant}" method="post" encType="multipart/form-data">      
+		                <div class="row register-form">
+		                    <div class="col-md-6">
+		
+	                          	<div class="form-group">
+	                              	<input type="text" class="form-control" placeholder="nom *" th:field="*{nom}" />
+	                          	</div>
+	                         	<div class="form-group">
+	                              	<input type="text" class="form-control" placeholder="prenom *" th:field="*{prenom}" />
+	                          	</div>
+	                          	<div class="form-group">
+	                              	<input type="password" class="form-control" placeholder="mot de passe *" name="mdp" />
+	                          	</div>
+	                          	<div class="form-group">
+	                              	<input type="password" class="form-control"  placeholder="Confirmer mot de passe *" name="mdpConfirmation" />
+	                              	<div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;" ></div>
+	                          	</div>
+	                          	<div class="form-group">
+		                            <input type="password" class="form-control"  placeholder="nouveau mot de passe *" name="nouveaumdp" />
+		                            <div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;" />
+		                        </div>
+	                          	<div class="form-group">
+	                              	<input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="numero tel " th:field="*{phoneNmbr}" />
+	                          	</div>
+	                          	<div class="form-group">
+	                              	<textarea class="form-control" id="message" name="description" rows="3" placeholder="description" th:field="*{description}"></textarea>
+	                          	</div>
+		
+		                    </div>
+		
+		                    <div class="col-md-6">
+		                        <div class="form-group mt-3">
+		                            <input type="email" class="form-control" placeholder="Email *" th:field="*{email}" />
+		                        </div>
+		                        <div class="form-group">
+		                            <input type="text" class="form-control" placeholder="adresse *" th:field="*{adresse}" />
+		                        </div>
+		                          <!-- 
+		                        <div class="custom-file mb-3">
+		                            <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
+		                            <label class="custom-file-label" for="myfile">video presentative</label>
+		                        </div>
+		                        <div class="custom-file ">
+		                            <input type="file" id="myfile" class="custom-file-input" th:field="*{cv}">
+		                            <label class="custom-file-label" for="myfile">CV</label>
+		                        </div>
+		 -->
+		                        <input type="submit" class="btnRegister"  value="s'inscrire"/>
+		                    </div>
+		                </div>
+	                </form>
+            	</div>
+		  	</div>
+		  	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
+		  		<h3 class="register-heading" style="color:#fff;">Mes condidatures</h3>
+
+
+		  		<!-- to remove -->
+		  		<div class="p-4 cards-his" th:each="a,status:${etudiantAnnonces}">
+          			<h6 class="text-danger font-weight-bold "><i class="fas fa-graduation-cap mr-2"></i> <spam th:text="${a.annonce.titre}"></spam></h6>
+          			<div class="card p-3 ">
+		            <blockquote>
+		                <p th:text="${a.annonce.description}" ></p>
+		                <footer>
+		                    <small class="pr-4">
+		                      <i class="fas fa-calendar-alt mr-2"></i><spam th:text="${a.annonce.dateCreation}"></spam>
+		                    </small>
+		                    <small class="pr-4">
+		                      <i class="fas fa-map-marker-alt mr-2"></i><spam th:text="${a.annonce.lieu}"></spam>
+		                    </small>
+		                    <small class="pr-4">
+		                      <cite title="Source Title"><i class="fas fa-address-card mr-2"></i><spam th:text="${a.annonce.entrepreneur.nomEntreprise}" /></cite>
+		                    </small>
+		                </footer>
+		            </blockquote>
+          		</div>
+        		</div>
+        	</div>
+	        <!-- end to remove -->
+		</div>
+	</div>
+
+
+
+
+
+
+<div th:replace="footer"></div>
+
+    
+    
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script >
+      $("#profileImage").click(function(e) {
+          $("#imageUpload").click();
+      });
+
+      function fasterPreview( uploader ) {
+          if ( uploader.files && uploader.files[0] ){
+                $('#profileImage').attr('src', 
+                   window.URL.createObjectURL(uploader.files[0]) );
+          }
+      }
+
+      $("#imageUpload").change(function(){
+          fasterPreview( this );
+      });
+
+        // etudiant
+
+      $("#profileImageEtudiant").click(function(e) {
+          $("#imageUploadEtudiant").click();
+      });
+
+      function fasterPreview1( uploader ) {
+          if ( uploader.files && uploader.files[0] ){
+                $('#profileImageEtudiant').attr('src', 
+                   window.URL.createObjectURL(uploader.files[0]) );
+          }
+      }
+
+      $("#imageUploadEtudiant").change(function(){
+          fasterPreview1( this );
+      });
+    </script>
+    
+    <script>
+	    $('body').scrollspy({ target: '#scrollspy' });
+	
+	    // Add smooth scrolling
+	    $('#scrollspy a').on('click', function (e) {
+	      // Check for a hash value
+	      if (this.hash !== '') {
+	        // Prevent default behavior
+	        e.preventDefault();
+	
+	        // Store hash
+	        const hash = this.hash;
+	
+	        // Animate smooth scroll
+	        $('html, body').animate({
+	          scrollTop: $(hash).offset().top
+	        }, 900, function () {
+	          // Add hash to URL after scroll
+	          window.location.hash = hash;
+	        });
+	      }
+	    });
+	  </script>
+	  
+	  <script >
+		// Init Popover
+		  $('[data-toggle="popover"]').popover();
+	
+		    function showPopover() {
+		      $('#hello').popover('show');
+		    }
+	
+		    function hidePopover() {
+		      $('#hello').popover('hide');
+		    }
+	
+		    function togglePopover() {
+		      $('#hello').popover('toggle');
+		    }
+	  </script>
+	  <script type = "text/javascript">
+            function getConfirmation() {
+               var retVal = confirm("vous etes sur d'envoyer les modifications ?");
+               if( retVal == true ) {
+                  return true;
+               } else {
+                  return false;
+               }
+            }
+      </script>   
+      
+</body>
+</html>
