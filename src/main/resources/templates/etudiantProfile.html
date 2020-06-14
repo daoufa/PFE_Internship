@@ -52,7 +52,7 @@
 			   </div>
 	    	</div>
 			<div id="links" class="d-flex justify-content-between">
-			    <a class="cta" href="#">download cv</a>
+			    <a class="cta" th:href="@{/profileEtudiant/downloadCv(cvId=${etudiant.id})}">download cv</a>
 		    </div>
     	</div>
 	</div>
@@ -112,13 +112,13 @@
 		                        <div class="custom-file mb-3">
 		                            <input type="file" id="myfile" class="custom-file-input" th:field="*{video}">
 		                            <label class="custom-file-label" for="myfile">video presentative</label>
-		                        </div>
+		                        </div>-->
 		                        <div class="custom-file ">
-		                            <input type="file" id="myfile" class="custom-file-input" th:field="*{cv}">
+		                            <input type="file" id="myfile" class="custom-file-input" name="file">
 		                            <label class="custom-file-label" for="myfile">CV</label>
 		                        </div>
-		 -->
-		                        <input type="submit" class="btnRegister"  value="s'inscrire"/>
+		 
+		                        <input type="submit" class="btnRegister"  value="enregistrer"/>
 		                    </div>
 		                </div>
 	                </form>

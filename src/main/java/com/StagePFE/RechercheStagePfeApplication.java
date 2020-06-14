@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.StagePFE.Storage.StorageProperties;
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.dao.EntrepreneurRepository;
 import com.StagePFE.dao.EtudiantAnnonceRepository;
@@ -26,6 +28,7 @@ import com.StagePFE.entities.Role;
 import com.StagePFE.entities.User;
 
 @SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
 public class RechercheStagePfeApplication implements CommandLineRunner {
 //	@Autowired
 //	private ProfileRepository profileRepository;

@@ -31,12 +31,12 @@ public class Etudiant extends Profile {
 
 	@OneToMany(mappedBy = "etudiant",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private List<EtudiantAnnonce> etudiantAnnonces;
-	private String cv;
+	private String cvName;
 	
 	public Etudiant(String email, String nom, String prenom, Date dateCreation, String photo, String video,
 			String description, String adresse, String phoneNmbr, String cv) {
 		super(email, nom, prenom, dateCreation, photo, video, description, adresse, phoneNmbr);
-		this.cv=cv;
+		this.cvName=cv;
 	}
 	
 	public void addEtudiantAnnonce(EtudiantAnnonce etdAnn) {
