@@ -448,6 +448,7 @@
 											          <div class="modal-body">
 											          	<spam th:text="${e.etudiant.nom}+' '+${e.etudiant.prenom}" /><br>
 											            <spam th:text="${e.etudiant.description}" />
+											            <a class="cta" th:href="@{/profileEtudiant/downloadCv(cvId=${e.etudiant.id})}">download cv</a>
 											          </div>
 											          <div class="modal-footer">
 											            <button class="btn btn-secondary" data-dismiss="modal">Fermer</button>

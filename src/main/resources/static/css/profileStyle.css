@@ -107,6 +107,22 @@ body {
 	border-radius:10px;
 }
 
+.modal-content{
+	background-color: #24252a;
+	color:#fff;
+}
+
+.cta {
+  padding: 2px 12px;
+  background-color: rgba(0, 136, 169, 0.3);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s;
+  color:#ddd;
+  font-weight: bold;
+}
+
 #table{
 	border-radius:10px;
 	background-color: rgba(250, 250, 250, 0.95);

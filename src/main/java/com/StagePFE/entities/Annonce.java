@@ -41,16 +41,16 @@ public class Annonce implements Serializable {
 	@Column(columnDefinition="text")
 	private String description;
 	private Date dateCreation;
-	private Date dateExperaiton;
+	private Date dateExperation;
 	private Boolean isOuvert;
 	private String lieu;
 
-	public Annonce(String titre, String description, Date dateCreation, Date dateExperaiton, Boolean isOuvert, String lieu) {
+	public Annonce(String titre, String description, Date dateCreation, Date dateExperation, Boolean isOuvert, String lieu) {
 		super();
 		this.titre = titre;
 		this.description = description;
 		this.dateCreation = dateCreation;
-		this.dateExperaiton = dateExperaiton;
+		this.dateExperation = dateExperation;
 		this.isOuvert = isOuvert;
 		this.lieu=lieu;
 	}
@@ -80,7 +80,7 @@ public class Annonce implements Serializable {
 	public String toString() {
 		return "Annonce [id=" + id + ", ligneRegarderPlusTardVisiteurs=" + ligneRegarderPlusTardVisiteurs + ", titre=" + titre
 				+ ", description=" + description + ", dateCreation=" + dateCreation + ", dateExperaiton="
-				+ dateExperaiton + ", isOuvert=" + isOuvert + ", lieu=" + lieu + "]";
+				+ dateExperation + ", isOuvert=" + isOuvert + ", lieu=" + lieu + "]";
 	}
 	
 	

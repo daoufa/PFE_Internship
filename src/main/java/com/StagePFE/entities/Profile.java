@@ -35,10 +35,6 @@ public class Profile implements Serializable {
 	private String description;
 	private String adresse;
 	private String phoneNmbr;
-//	@OneToOne(mappedBy = "profile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private Etudiant etudiant;
-//	@OneToOne(mappedBy = "profile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private Entrepreneur entrepreneur;
 	public Profile(String email, String nom, String prenom, Date dateCreation, String photo, String video,
 			String description, String adresse,String phoneNmbr) {
 		super();
@@ -61,6 +57,3 @@ public class Profile implements Serializable {
 	
 
 }
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "type_profile")
-//

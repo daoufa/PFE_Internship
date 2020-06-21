@@ -11,8 +11,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: white;
-  /*background: url(../imgs/black_white.jpg);*/
+  /*background: white;
+  background: url(../imgs/black_white.jpg);*/
   background: rgb(0,0,0);
   background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(187,187,187,1) 100%);
   background-repeat: no-repeat;

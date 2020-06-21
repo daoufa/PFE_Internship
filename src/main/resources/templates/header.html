@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="css/header.css" />
-    <title>Accueil</title>
-  </head>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="css/header.css" />
+<title>Accueil</title>
+</head>
 
-  <body>
-	<div class="container sticky-top mt-3 mb-5" id="headerDiv" th:fragment="header" >
-        <header id="main-header" >
-            <ul class="nav nav-fill nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link active text-white aHover"  href="/index">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link aHover" id="day" href="#">1 day 12 h</a> 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link aHover" th:href="@{/index}">decouvrir vos options</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link aHover" href="/profile">Profile <span id="profile-icon" class="fas fa-user-circle fa-lg"></span></a>
-                </li>
-            </ul>
-      </header>
-    </div>
-<!-- 
+<body>
+	<div class="container sticky-top mt-3 mb-5" id="headerDiv"
+		th:fragment="header">
+		<header id="main-header">
+			<ul class="nav nav-fill nav-pills">
+				<li class="nav-item"><a class="nav-link text-white aHover"
+					href="/index">Accueil</a></li>
+				<li class="nav-item"><a class="nav-link text-white aHover"
+					id="day" href="#">1 day 12 h</a></li>
+				<li class="nav-item"><a class="nav-link text-white aHover"
+					th:href="@{/index}">decouvrir vos options</a></li>
+				<li class="nav-item"><a class="nav-link text-white aHover"
+					href="/profile">Profile <span id="profile-icon"
+						class="fas fa-user-circle fa-lg"></span></a></li>
+			</ul>
+		</header>
+	</div>
+	<!-- 
     <script
       src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -44,6 +42,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>-->
-  </body>
+
+</body>
 </html>
-    
