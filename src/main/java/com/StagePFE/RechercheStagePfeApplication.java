@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.StagePFE.Storage.StorageProperties;
+import com.StagePFE.Storage.StorageService;
 import com.StagePFE.dao.AnnonceRepository;
 import com.StagePFE.dao.EntrepreneurRepository;
 import com.StagePFE.dao.EtudiantAnnonceRepository;
@@ -48,6 +49,9 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private StorageService storageService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(RechercheStagePfeApplication.class, args);
 	}
@@ -59,7 +63,9 @@ public class RechercheStagePfeApplication implements CommandLineRunner {
 				"first etudiant", "marrakech", "06535", null);
 
 		e1.setDateCreation(smpl.parse("2017-11-15"));
+		e1.setCvName("cv-ETUDIANT-ID1.pdf");
 		e1 = etudiantRepository.save(e1);
+
 		Etudiant e2 = etudiantRepository.save(new Etudiant("mosameh.meryem@Gmail.com", "mosameh", "meryem", new Date(),
 				"c:/photos", "c:/videos", "mosameh meryem", "Marrakech", "06000666", null));
 		Etudiant e3 = etudiantRepository.save(new Etudiant("daoufa@mail.com", "daoufa", "abderrahman", new Date(),

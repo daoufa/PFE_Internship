@@ -1,24 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Racing+Sans+One);
+
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
-html,
-body {
-  height: 100%;
+
+html, body {
+	height: 100%;
 }
+
 body {
-  background: url(../imgs/balloon.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  padding-bottom: 300px;
-  min-height: 100vh;
-  position: relative;
+	background: url(../imgs/balloon.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	padding-bottom: 300px;
+	min-height: 100vh;
+	position: relative;
 }
 
 #seachIcon {
-  background-color: rgba(223, 193, 23, 0.712);
+	background-color: rgba(223, 193, 23, 0.712);
 }
-#searchDiv > form > input {
-  background-color: rgb(235, 234, 231);
+
+#searchDiv>form>input {
+	background-color: rgb(235, 234, 231);
 }

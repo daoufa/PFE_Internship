@@ -32,6 +32,7 @@ import com.StagePFE.entities.Etudiant;
 import com.StagePFE.entities.EtudiantAnnonce;
 import com.StagePFE.entities.Role;
 import com.StagePFE.entities.User;
+import com.StagePFE.service.HomeService;
 
 @Controller
 public class HomeController {
@@ -47,6 +48,8 @@ public class HomeController {
 	private HttpServletRequest httpServletRequest;
 	@Autowired
 	private StorageService storageService;
+	@Autowired
+	private HomeService homeService;
 
 	@GetMapping(value = "/login")
 	public String homePage(Model model) {
@@ -62,7 +65,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public RedirectView redirectIndex() {
-		return new RedirectView("/inde");
+		return new RedirectView("/index");
 	}
 
 	@GetMapping("/index")
@@ -122,29 +125,7 @@ public class HomeController {
 			@RequestParam(name = "groupLocalite", defaultValue = "") List<String> localites,
 			@RequestParam(name = "groupMotsCles", defaultValue = "") List<String> motscles) {
 
-		if (motscles.size() == 0) {
-			motscles.add("%%");
-		} else {
-			int i = 0;
-			for (String str : motscles) {
-				str = "%" + str + "%";
-				motscles.set(i, str);
-				i++;
-			}
-		}
-
-		if (localites.size() == 0) {
-			localites.add("%%");
-		} else {
-			int i = 0;
-			for (String str : localites) {
-				str = "%" + str + "%";
-				localites.set(i, str);
-				i++;
-			}
-		}
-		Page<Annonce> annonces = annonceRepository.searchFilter(motscles, PageRequest.of(page, 9));// ,localites,entreprise
-		System.out.println(annonces.getNumberOfElements());
+		Page<Annonce> annonces = homeService.trier(entreprise, localites, motscles, page);
 		model.addAttribute("annonces", annonces.getContent());
 		model.addAttribute("pages", new int[annonces.getTotalPages()]);
 		model.addAttribute("currentPage", page);

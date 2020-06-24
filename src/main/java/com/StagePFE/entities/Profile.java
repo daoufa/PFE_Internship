@@ -3,7 +3,6 @@ package com.StagePFE.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +16,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @MappedSuperclass
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Profile implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +36,9 @@ public class Profile implements Serializable {
 	private String description;
 	private String adresse;
 	private String phoneNmbr;
+
 	public Profile(String email, String nom, String prenom, Date dateCreation, String photo, String video,
-			String description, String adresse,String phoneNmbr) {
+			String description, String adresse, String phoneNmbr) {
 		super();
 		this.email = email;
 		this.nom = nom;
@@ -48,12 +50,12 @@ public class Profile implements Serializable {
 		this.adresse = adresse;
 		this.phoneNmbr = phoneNmbr;
 	}
+
 	@Override
 	public String toString() {
 		return "Profile [id=" + id + ", email=" + email + ", nom=" + nom + ", prenom=" + prenom + ", dateCreation="
 				+ dateCreation + ", photo=" + photo + ", video=" + video + ", description=" + description + ", adresse="
 				+ adresse + "]";
 	}
-	
 
 }

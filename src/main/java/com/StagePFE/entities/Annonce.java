@@ -34,28 +34,28 @@ public class Annonce implements Serializable {
 	@OneToMany(mappedBy = "annonce")
 	private List<EtudiantAnnonce> etudiantAnnonces;
 
-	@OneToMany(mappedBy = "annonce",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "annonce", fetch = FetchType.EAGER)
 	private List<LigneRegarderPlusTardVisiteur> ligneRegarderPlusTardVisiteurs;
 
 	private String titre;
-	@Column(columnDefinition="text")
+	@Column(columnDefinition = "text")
 	private String description;
 	private Date dateCreation;
 	private Date dateExperation;
 	private Boolean isOuvert;
 	private String lieu;
 
-	public Annonce(String titre, String description, Date dateCreation, Date dateExperation, Boolean isOuvert, String lieu) {
+	public Annonce(String titre, String description, Date dateCreation, Date dateExperation, Boolean isOuvert,
+			String lieu) {
 		super();
 		this.titre = titre;
 		this.description = description;
 		this.dateCreation = dateCreation;
 		this.dateExperation = dateExperation;
 		this.isOuvert = isOuvert;
-		this.lieu=lieu;
+		this.lieu = lieu;
 	}
 
-	
 	public void addEtudiantAnnonce(EtudiantAnnonce etdAnn) {
 		if (etudiantAnnonces == null) {
 			etudiantAnnonces = new ArrayList<>();
@@ -64,8 +64,7 @@ public class Annonce implements Serializable {
 		etdAnn.setAnnonce(this);
 
 	}
-	
-	
+
 	public void addLigneRegarderPlusTardVisiteur(LigneRegarderPlusTardVisiteur lnregarder) {
 		if (ligneRegarderPlusTardVisiteurs == null) {
 			ligneRegarderPlusTardVisiteurs = new ArrayList<>();
@@ -75,15 +74,11 @@ public class Annonce implements Serializable {
 
 	}
 
-
 	@Override
 	public String toString() {
-		return "Annonce [id=" + id + ", ligneRegarderPlusTardVisiteurs=" + ligneRegarderPlusTardVisiteurs + ", titre=" + titre
-				+ ", description=" + description + ", dateCreation=" + dateCreation + ", dateExperaiton="
+		return "Annonce [id=" + id + ", ligneRegarderPlusTardVisiteurs=" + ligneRegarderPlusTardVisiteurs + ", titre="
+				+ titre + ", description=" + description + ", dateCreation=" + dateCreation + ", dateExperaiton="
 				+ dateExperation + ", isOuvert=" + isOuvert + ", lieu=" + lieu + "]";
 	}
-	
-	
 
-	
 }
